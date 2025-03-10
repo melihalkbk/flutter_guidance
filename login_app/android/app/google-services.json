@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "764272310427",
+    "project_id": "flutterauth-feedc",
+    "storage_bucket": "flutterauth-feedc.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:764272310427:android:17d3a75082b1dcf75dae3e",
+        "android_client_info": {
+          "package_name": "com.example.login_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAJaH-4o3zbqb966bPSsGWTnmP3wDeBBeA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
