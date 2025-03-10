@@ -1,21 +1,19 @@
 import 'package:flutter/material.dart';
 import '../services/auth_service.dart';
-import 'register_page.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class RegisterPage extends StatefulWidget {
+  const RegisterPage({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<RegisterPage> createState() => _RegisterPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _RegisterPageState extends State<RegisterPage> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final AuthService _authService = AuthService();
   bool _isLoading = false;
-  String? _errorMessage;
 
   @override
   void dispose() {
@@ -24,37 +22,47 @@ class _LoginPageState extends State<LoginPage> {
     super.dispose();
   }
 
-  void _signIn() async {
+  void _showErrorMessage(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        backgroundColor: Colors.red,
+        duration: const Duration(seconds: 3),
+      ),
+    );
+  }
+
+  void _register() async {
     if (_formKey.currentState!.validate()) {
       setState(() {
         _isLoading = true;
-        _errorMessage = null;
       });
 
       try {
-        var user = await _authService.signInWithEmailAndPassword(
+        var user = await _authService.registerWithEmailAndPassword(
           email: _emailController.text.trim(),
           password: _passwordController.text.trim(),
         );
 
         if (user != null) {
-          print("Login Successful: ${user.user?.email}");
+          print("Registration Successful: ${user.user?.email}");
+
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
-              content: Text("Login successful"),
+              content: Text("Registration successful!"),
               backgroundColor: Colors.green,
               duration: Duration(seconds: 2),
             ),
           );
+
+          Navigator.pop(context);
         } else {
-          setState(() {
-            _errorMessage = "Login failed. Please check your credentials.";
-          });
+          _showErrorMessage(
+            "Registration failed. Please check your information.",
+          );
         }
       } catch (e) {
-        setState(() {
-          _errorMessage = "An error occurred: $e";
-        });
+        _showErrorMessage(e.toString());
       }
 
       setState(() {
@@ -80,6 +88,9 @@ class _LoginPageState extends State<LoginPage> {
                     if (text == null || text.isEmpty) {
                       return 'Please enter email';
                     }
+                    if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(text)) {
+                      return 'Please enter a valid email';
+                    }
                     return null;
                   },
                   decoration: const InputDecoration(labelText: 'Email'),
@@ -92,18 +103,13 @@ class _LoginPageState extends State<LoginPage> {
                     if (text == null || text.isEmpty) {
                       return 'Please enter password';
                     }
+                    if (text.length < 6) {
+                      return 'Password must be at least 6 characters';
+                    }
                     return null;
                   },
                   decoration: const InputDecoration(labelText: 'Password'),
                 ),
-                if (_errorMessage != null)
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10),
-                    child: Text(
-                      _errorMessage!,
-                      style: const TextStyle(color: Colors.red),
-                    ),
-                  ),
                 const SizedBox(height: 20),
                 _isLoading
                     ? const CircularProgressIndicator()
@@ -111,21 +117,10 @@ class _LoginPageState extends State<LoginPage> {
                       width: double.infinity,
                       height: 45,
                       child: ElevatedButton(
-                        onPressed: _signIn,
-                        child: const Text('Login'),
+                        onPressed: _register,
+                        child: const Text('Register'),
                       ),
                     ),
-                TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const RegisterPage(),
-                      ),
-                    );
-                  },
-                  child: const Text("Don't have an account? Register"),
-                ),
               ],
             ),
           ),
