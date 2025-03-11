@@ -86,9 +86,11 @@
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>2105605626519271</string>
+				<string></string>
 			</array>
 		</dict>
 	</array>
+
 
 </dict>
 </plist>
