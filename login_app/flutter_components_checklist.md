@@ -9,10 +9,10 @@
 - [X] **SingleChildScrollView**  
 - [X] **Expanded**  
 - [X] **Flexible**  
-- [] **Wrap**  
-- [] **Align**  
-- [] **Center**  
-- [] **SizedBox**  
+- [X] **Wrap**  
+- [X] **Align**  
+- [X] **Center**  
+- [X] **SizedBox**  
 - [] **Padding**  
 - [] **Margin (via Container)**  
 - [] **Container**  
