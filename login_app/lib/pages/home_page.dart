@@ -5,6 +5,10 @@ import '../components/column.dart';
 import '../components/row.dart';
 import '../components/stack.dart';
 import '../components/list_view.dart';
+import '../components/grid_view.dart';
+import '../components/single_child_scroll_view.dart';
+import '../components/expanded.dart';
+import '../components/flexible.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({super.key});
@@ -134,6 +138,7 @@ class HomePage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20),
+            //ListView Button
             Center(
               child: SizedBox(
                 width: double.infinity,
@@ -152,6 +157,99 @@ class HomePage extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(vertical: 14),
                   ),
                   child: const Text("Go to ListView"),
+                ),
+              ),
+            ),
+            const SizedBox(height: 20),
+            //GridView Button
+            Center(
+              child: SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const GridViewView(),
+                      ),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.blue,
+                    foregroundColor: Colors.white,
+                    padding: const EdgeInsets.symmetric(vertical: 14),
+                  ),
+                  child: const Text("Go to GridView"),
+                ),
+              ),
+            ),
+            const SizedBox(height: 20),
+            //SingleChildScrollView Button
+            Center(
+              child: SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder:
+                            (context) => const SingleChildScrollViewExample(),
+                      ),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.blue,
+                    foregroundColor: Colors.white,
+                    padding: const EdgeInsets.symmetric(vertical: 14),
+                  ),
+                  child: const Text("Go to Single Child Scroll View"),
+                ),
+              ),
+            ),
+            const SizedBox(height: 20),
+            //Expanded Button
+            Center(
+              child: SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const ExpandedExample(),
+                      ),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.blue,
+                    foregroundColor: Colors.white,
+                    padding: const EdgeInsets.symmetric(vertical: 14),
+                  ),
+                  child: const Text("Go to Expanded View"),
+                ),
+              ),
+            ),
+            const SizedBox(height: 20),
+            //Flexible Button
+            Center(
+              child: SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const FlexibleExample(),
+                      ),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.blue,
+                    foregroundColor: Colors.white,
+                    padding: const EdgeInsets.symmetric(vertical: 14),
+                  ),
+                  child: const Text("Go to Flexible View"),
                 ),
               ),
             ),
