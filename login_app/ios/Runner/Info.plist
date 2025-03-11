@@ -45,6 +45,8 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+
+	<!-- 📌 GOOGLE AUTHENTICATION -->
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -61,6 +63,32 @@
 		<key>CLIENT_ID</key>
 		<string>764272310427-ulr93toogd5b7gfrclsgasehsg274nbc.apps.googleusercontent.com</string>
 	</dict>
+
+	<!-- 📌 FACEBOOK AUTHENTICATION -->
+	<key>FacebookAppID</key>
+	<string>2105605626519271</string>
+	<key>FacebookClientToken</key>
+	<string>d53dc7bb65bce206476f47d2a992f3de</string>
+	<key>FacebookDisplayName</key>
+	<string>flutter-login</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>fbapi</string>
+		<string>fb-messenger-share-api</string>
+		<string>fbauth2</string>
+		<string>fbshareextension</string>
+	</array>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>2105605626519271</string>
+			</array>
+		</dict>
+	</array>
 
 </dict>
 </plist>
