@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../services/auth_service.dart';
+import '../components/column.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({super.key});
@@ -13,23 +14,45 @@ class HomePage extends StatelessWidget {
     final String displayName = user?.displayName ?? "Guest";
 
     return Scaffold(
-      appBar: AppBar(title: const Text("Home"), centerTitle: true),
+      appBar: AppBar(
+        title: Row(
+          mainAxisAlignment:
+              MainAxisAlignment.spaceBetween, // Home sola, Logout sağa
+          children: [
+            const Text("Home"), // Sol tarafta Home yazısı
+            ElevatedButton(
+              onPressed: () async {
+                await _authService.signOut();
+                Navigator.pushReplacementNamed(context, "/login");
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.red,
+                foregroundColor: Colors.white,
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 10,
+                ),
+              ),
+              child: const Text("Logout"),
+            ),
+          ],
+        ),
+      ),
       body: Padding(
-        padding: const EdgeInsets.all(1.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(height: 30),
+            // Kullanıcı bilgisi
             Center(
               child: Column(
-                mainAxisSize: MainAxisSize.min,
                 children: [
                   const Icon(
                     Icons.account_circle,
-                    size: 50,
+                    size: 100,
                     color: Colors.blue,
                   ),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 10),
                   Text(
                     "Welcome, $displayName!",
                     style: const TextStyle(
@@ -37,26 +60,31 @@ class HomePage extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  const SizedBox(height: 20),
-                  SizedBox(
-                    width: 150,
-                    height: 45,
-                    child: ElevatedButton(
-                      onPressed: () async {
-                        await _authService.signOut();
-                        Navigator.pushReplacementNamed(context, "/login");
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.red,
-                        foregroundColor: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                      ),
-                      child: const Text("Logout"),
-                    ),
-                  ),
                 ],
+              ),
+            ),
+            const SizedBox(height: 40),
+
+            // Column Button
+            Center(
+              child: SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const ColumnView(),
+                      ),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.blue,
+                    foregroundColor: Colors.white,
+                    padding: const EdgeInsets.symmetric(vertical: 14),
+                  ),
+                  child: const Text("Go to Column"),
+                ),
               ),
             ),
           ],
