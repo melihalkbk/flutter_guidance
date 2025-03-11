@@ -15,7 +15,6 @@ class _LoginPageState extends State<LoginPage> {
   final _passwordController = TextEditingController();
   final AuthService _authService = AuthService();
   bool _isLoading = false;
-  String? _errorMessage;
 
   @override
   void dispose() {
@@ -24,12 +23,19 @@ class _LoginPageState extends State<LoginPage> {
     super.dispose();
   }
 
+  void _showErrorMessage(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        backgroundColor: Colors.red,
+        duration: const Duration(seconds: 3),
+      ),
+    );
+  }
+
   void _signIn() async {
     if (_formKey.currentState!.validate()) {
-      setState(() {
-        _isLoading = true;
-        _errorMessage = null;
-      });
+      setState(() => _isLoading = true);
 
       try {
         var user = await _authService.signInWithEmailAndPassword(
@@ -38,7 +44,6 @@ class _LoginPageState extends State<LoginPage> {
         );
 
         if (user != null) {
-          print("Login Successful: ${user.user?.email}");
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
               content: Text("Login successful"),
@@ -46,21 +51,43 @@ class _LoginPageState extends State<LoginPage> {
               duration: Duration(seconds: 2),
             ),
           );
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => LoginPage()),
+          );
         } else {
-          setState(() {
-            _errorMessage = "Login failed. Please check your credentials.";
-          });
+          _showErrorMessage("Login failed. Please check your credentials.");
         }
       } catch (e) {
-        setState(() {
-          _errorMessage = "An error occurred: $e";
-        });
+        _showErrorMessage("An error occurred: $e");
       }
 
-      setState(() {
-        _isLoading = false;
-      });
+      setState(() => _isLoading = false);
     }
+  }
+
+  void _signInWithGoogle() async {
+    setState(() => _isLoading = true);
+
+    var user = await _authService.signInWithGoogle();
+
+    if (user != null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Google Sign-In successful"),
+          backgroundColor: Colors.green,
+          duration: Duration(seconds: 2),
+        ),
+      );
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => LoginPage()),
+      );
+    } else {
+      _showErrorMessage("Google Sign-In failed.");
+    }
+
+    setState(() => _isLoading = false);
   }
 
   @override
@@ -78,7 +105,7 @@ class _LoginPageState extends State<LoginPage> {
                   controller: _emailController,
                   validator: (text) {
                     if (text == null || text.isEmpty) {
-                      return 'Please enter email';
+                      return 'Please enter your email';
                     }
                     return null;
                   },
@@ -90,30 +117,44 @@ class _LoginPageState extends State<LoginPage> {
                   obscureText: true,
                   validator: (text) {
                     if (text == null || text.isEmpty) {
-                      return 'Please enter password';
+                      return 'Please enter your password';
                     }
                     return null;
                   },
                   decoration: const InputDecoration(labelText: 'Password'),
                 ),
-                if (_errorMessage != null)
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10),
-                    child: Text(
-                      _errorMessage!,
-                      style: const TextStyle(color: Colors.red),
-                    ),
-                  ),
                 const SizedBox(height: 20),
                 _isLoading
                     ? const CircularProgressIndicator()
-                    : SizedBox(
-                      width: double.infinity,
-                      height: 45,
-                      child: ElevatedButton(
-                        onPressed: _signIn,
-                        child: const Text('Login'),
-                      ),
+                    : Column(
+                      children: [
+                        SizedBox(
+                          width: double.infinity,
+                          height: 45,
+                          child: ElevatedButton(
+                            onPressed: _signIn,
+                            child: const Text('Login'),
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        SizedBox(
+                          width: double.infinity,
+                          height: 45,
+                          child: ElevatedButton.icon(
+                            onPressed: _signInWithGoogle,
+                            icon: Image.asset(
+                              'assets/googleLogo.png',
+                              height: 24,
+                            ),
+                            label: const Text('Sign in with Google'),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.white,
+                              foregroundColor: Colors.black,
+                              side: const BorderSide(color: Colors.grey),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                 TextButton(
                   onPressed: () {
