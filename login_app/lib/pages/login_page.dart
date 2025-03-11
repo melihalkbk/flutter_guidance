@@ -18,6 +18,7 @@ class _LoginPageState extends State<LoginPage> {
   final _surnameController = TextEditingController();
   final AuthService _authService = AuthService();
   bool _isLoading = false;
+  bool _isPasswordVisible = false;
 
   @override
   void dispose() {
@@ -170,13 +171,28 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(height: 20),
                 TextFormField(
                   controller: _passwordController,
-                  obscureText: true,
+                  obscureText: !_isPasswordVisible,
                   validator:
                       (text) =>
                           text == null || text.isEmpty
                               ? 'Please enter your password'
                               : null,
-                  decoration: const InputDecoration(labelText: 'Password'),
+                  decoration: InputDecoration(
+                    labelText: 'Password',
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        _isPasswordVisible
+                            ? Icons.visibility
+                            : Icons.visibility_off,
+                        color: Colors.grey,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          _isPasswordVisible = !_isPasswordVisible;
+                        });
+                      },
+                    ),
+                  ),
                 ),
                 const SizedBox(height: 20),
                 _isLoading
@@ -198,7 +214,7 @@ class _LoginPageState extends State<LoginPage> {
                           child: ElevatedButton.icon(
                             onPressed: _signInWithGoogle,
                             icon: Image.asset(
-                              'assets/googleLogo.png', // Ensure this exists
+                              'assets/googleLogo.png',
                               height: 24,
                             ),
                             label: const Text('Sign in with Google'),
@@ -216,7 +232,7 @@ class _LoginPageState extends State<LoginPage> {
                           child: ElevatedButton.icon(
                             onPressed: _signInWithFacebook,
                             icon: Image.asset(
-                              'assets/facebookLogo.png', // Ensure this exists
+                              'assets/facebookLogo.png',
                               height: 24,
                             ),
                             label: const Text('Sign in with Facebook'),
@@ -225,6 +241,18 @@ class _LoginPageState extends State<LoginPage> {
                               foregroundColor: Colors.white,
                             ),
                           ),
+                        ),
+                        const SizedBox(height: 10),
+                        TextButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const RegisterPage(),
+                              ),
+                            );
+                          },
+                          child: const Text("Don't have an account? Register"),
                         ),
                         const SizedBox(height: 20),
                         const Divider(),
@@ -255,17 +283,6 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                       ],
                     ),
-                TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const RegisterPage(),
-                      ),
-                    );
-                  },
-                  child: const Text("Don't have an account? Register"),
-                ),
               ],
             ),
           ),
