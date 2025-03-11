@@ -14,6 +14,8 @@ class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  final _nameController = TextEditingController();
+  final _surnameController = TextEditingController();
   final AuthService _authService = AuthService();
   bool _isLoading = false;
 
@@ -21,6 +23,8 @@ class _LoginPageState extends State<LoginPage> {
   void dispose() {
     _emailController.dispose();
     _passwordController.dispose();
+    _nameController.dispose();
+    _surnameController.dispose();
     super.dispose();
   }
 
@@ -113,6 +117,36 @@ class _LoginPageState extends State<LoginPage> {
     setState(() => _isLoading = false);
   }
 
+  Future<void> _signInAsGuest() async {
+    if (_nameController.text.trim().isEmpty ||
+        _surnameController.text.trim().isEmpty) {
+      _showErrorMessage("Please enter your name and surname.");
+      return;
+    }
+
+    setState(() => _isLoading = true);
+
+    var user = await _authService.signInAsGuest(
+      name: _nameController.text.trim(),
+      surname: _surnameController.text.trim(),
+    );
+
+    if (user != null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("✅ Guest login successful"),
+          backgroundColor: Colors.green,
+          duration: Duration(seconds: 2),
+        ),
+      );
+      _navigateToHome();
+    } else {
+      _showErrorMessage("❌ Guest login failed.");
+    }
+
+    setState(() => _isLoading = false);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -190,6 +224,33 @@ class _LoginPageState extends State<LoginPage> {
                               backgroundColor: Colors.blue,
                               foregroundColor: Colors.white,
                             ),
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+                        const Divider(),
+                        const SizedBox(height: 20),
+                        TextFormField(
+                          controller: _nameController,
+                          decoration: const InputDecoration(labelText: 'Name'),
+                        ),
+                        const SizedBox(height: 10),
+                        TextFormField(
+                          controller: _surnameController,
+                          decoration: const InputDecoration(
+                            labelText: 'Surname',
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        SizedBox(
+                          width: double.infinity,
+                          height: 45,
+                          child: ElevatedButton(
+                            onPressed: _signInAsGuest,
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.grey.shade800,
+                              foregroundColor: Colors.white,
+                            ),
+                            child: const Text('Continue as Guest'),
                           ),
                         ),
                       ],

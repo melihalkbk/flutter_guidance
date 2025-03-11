@@ -9,6 +9,9 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final user = FirebaseAuth.instance.currentUser;
+    final userName = user?.displayName ?? user?.email ?? "Guest";
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Home"),
@@ -22,10 +25,35 @@ class HomePage extends StatelessWidget {
           ),
         ],
       ),
-      body: Center(
-        child: Text(
-          "Welcome, ${FirebaseAuth.instance.currentUser?.email ?? 'User'}!",
-          style: const TextStyle(fontSize: 20),
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const Icon(Icons.account_circle, size: 100, color: Colors.blue),
+            const SizedBox(height: 20),
+            Text(
+              "Welcome, $userName!",
+              style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 30),
+            ElevatedButton(
+              onPressed: () async {
+                await _authService.signOut();
+                Navigator.pushReplacementNamed(context, "/login");
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.red,
+                foregroundColor: Colors.white,
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 50,
+                  vertical: 15,
+                ),
+              ),
+              child: const Text("Logout"),
+            ),
+          ],
         ),
       ),
     );

@@ -78,6 +78,27 @@ class AuthService {
     }
   }
 
+  // Sign in as Guest
+  Future<UserCredential?> signInAsGuest({
+    required String name,
+    required String surname,
+  }) async {
+    try {
+      UserCredential userCredential = await _auth.signInAnonymously();
+      User? user = userCredential.user;
+
+      if (user != null) {
+        await user.updateDisplayName("$name $surname");
+        await user.reload();
+      }
+
+      return userCredential;
+    } catch (e) {
+      print("Guest Login Error: $e");
+      return null;
+    }
+  }
+
   // Check auth state
   Future<bool> isUserLoggedIn() async {
     return _auth.currentUser != null;
