@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../services/auth_service.dart';
 import 'register_page.dart';
+import 'home_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -33,7 +34,14 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  void _signIn() async {
+  void _navigateToHome() {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => HomePage()),
+    );
+  }
+
+  Future<void> _signIn() async {
     if (_formKey.currentState!.validate()) {
       setState(() => _isLoading = true);
 
@@ -51,10 +59,7 @@ class _LoginPageState extends State<LoginPage> {
               duration: Duration(seconds: 2),
             ),
           );
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => const LoginPage()),
-          );
+          _navigateToHome();
         } else {
           _showErrorMessage("❌ Login failed. Please check your credentials.");
         }
@@ -66,7 +71,7 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
-  void _signInWithGoogle() async {
+  Future<void> _signInWithGoogle() async {
     setState(() => _isLoading = true);
 
     var user = await _authService.signInWithGoogle();
@@ -79,10 +84,7 @@ class _LoginPageState extends State<LoginPage> {
           duration: Duration(seconds: 2),
         ),
       );
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const LoginPage()),
-      );
+      _navigateToHome();
     } else {
       _showErrorMessage("❌ Google Sign-In failed.");
     }
@@ -90,7 +92,7 @@ class _LoginPageState extends State<LoginPage> {
     setState(() => _isLoading = false);
   }
 
-  void _signInWithFacebook() async {
+  Future<void> _signInWithFacebook() async {
     setState(() => _isLoading = true);
 
     var user = await _authService.signInWithFacebook();
@@ -103,10 +105,7 @@ class _LoginPageState extends State<LoginPage> {
           duration: Duration(seconds: 2),
         ),
       );
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const LoginPage()),
-      );
+      _navigateToHome();
     } else {
       _showErrorMessage("❌ Facebook Sign-In failed.");
     }
@@ -127,24 +126,22 @@ class _LoginPageState extends State<LoginPage> {
               children: [
                 TextFormField(
                   controller: _emailController,
-                  validator: (text) {
-                    if (text == null || text.isEmpty) {
-                      return 'Please enter your email';
-                    }
-                    return null;
-                  },
+                  validator:
+                      (text) =>
+                          text == null || text.isEmpty
+                              ? 'Please enter your email'
+                              : null,
                   decoration: const InputDecoration(labelText: 'Email'),
                 ),
                 const SizedBox(height: 20),
                 TextFormField(
                   controller: _passwordController,
                   obscureText: true,
-                  validator: (text) {
-                    if (text == null || text.isEmpty) {
-                      return 'Please enter your password';
-                    }
-                    return null;
-                  },
+                  validator:
+                      (text) =>
+                          text == null || text.isEmpty
+                              ? 'Please enter your password'
+                              : null,
                   decoration: const InputDecoration(labelText: 'Password'),
                 ),
                 const SizedBox(height: 20),
@@ -185,7 +182,7 @@ class _LoginPageState extends State<LoginPage> {
                           child: ElevatedButton.icon(
                             onPressed: _signInWithFacebook,
                             icon: Image.asset(
-                              'assets/facebookLogo.png',
+                              'assets/facebookLogo.png', // Ensure this exists
                               height: 24,
                             ),
                             label: const Text('Sign in with Facebook'),
