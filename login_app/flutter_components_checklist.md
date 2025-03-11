@@ -1,8 +1,8 @@
 ### **📌 Flutter Widget Checklist**  
 
 #### **🔹 Layout & Containers**
-- [] **Column**  
-- [] **Row**  
+- [X] **Column**  
+- [X] **Row**  
 - [] **Stack**  
 - [] **ListView**  
 - [] **GridView**  

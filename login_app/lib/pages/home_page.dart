@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../services/auth_service.dart';
 import '../components/column.dart';
+import '../components/row.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({super.key});
@@ -16,10 +17,9 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Row(
-          mainAxisAlignment:
-              MainAxisAlignment.spaceBetween, // Home sola, Logout sağa
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Text("Home"), // Sol tarafta Home yazısı
+            const Text("Home"),
             ElevatedButton(
               onPressed: () async {
                 await _authService.signOut();
@@ -43,7 +43,6 @@ class HomePage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Kullanıcı bilgisi
             Center(
               child: Column(
                 children: [
@@ -84,6 +83,28 @@ class HomePage extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(vertical: 14),
                   ),
                   child: const Text("Go to Column"),
+                ),
+              ),
+            ),
+            const SizedBox(height: 20),
+
+            //Row Button
+            Center(
+              child: SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const RowView()),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.blue,
+                    foregroundColor: Colors.white,
+                    padding: const EdgeInsets.symmetric(vertical: 14),
+                  ),
+                  child: const Text("Go to Row"),
                 ),
               ),
             ),
