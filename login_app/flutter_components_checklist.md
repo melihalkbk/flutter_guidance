@@ -1,0 +1,140 @@
+### **📌 Flutter Widget Checklist**  
+
+#### **🔹 Layout & Containers**
+- [] **Column**  
+- [] **Row**  
+- [] **Stack**  
+- [] **ListView**  
+- [] **GridView**  
+- [] **SingleChildScrollView**  
+- [] **Expanded**  
+- [] **Flexible**  
+- [] **Wrap**  
+- [] **Align**  
+- [] **Center**  
+- [] **SizedBox**  
+- [] **Padding**  
+- [] **Margin (via Container)**  
+- [] **Container**  
+- [] **Card**  
+- [] **Divider**  
+- [] **Spacer**  
+- [] **AspectRatio**  
+
+---
+
+#### **🔹 Text & Images**
+- [] **Text**  
+- [] **RichText**  
+- [] **SelectableText**  
+- [] **TextField**  
+- [] **Image**  
+- [] **Icon**  
+- [] **CircleAvatar**  
+
+---
+
+#### **🔹 Buttons**
+- [] **ElevatedButton**  
+- [] **TextButton**  
+- [] **OutlinedButton**  
+- [] **FloatingActionButton (FAB)**  
+- [] **IconButton**  
+- [] **PopupMenuButton**  
+
+---
+
+#### **🔹 Input & Controls**
+- [] **TextFormField**  
+- [] **Checkbox**  
+- [] **Radio**  
+- [] **Switch**  
+- [] **Slider**  
+- [] **DatePicker**  
+- [] **DropdownButton**  
+- [] **Autocomplete**  
+- [] **RangeSlider**  
+
+---
+
+#### **🔹 Navigation & Routing**
+- [] **Navigator**  
+- [] **MaterialPageRoute**  
+- [] **Named Routes**  
+- [] **BottomNavigationBar**  
+- [] **TabBar**  
+- [] **Drawer**  
+- [] **AppBar**  
+
+---
+
+#### **🔹 Animations**
+- [] **AnimatedContainer**  
+- [] **AnimatedOpacity**  
+- [] **AnimatedAlign**  
+- [] **AnimatedCrossFade**  
+- [] **AnimatedSwitcher**  
+- [] **Hero**  
+- [] **FadeTransition**  
+- [] **SlideTransition**  
+- [] **ScaleTransition**  
+
+---
+
+#### **🔹 Gestures**
+- [] **GestureDetector**  
+- [] **InkWell**  
+- [] **Dismissible**  
+- [] **Draggable**  
+
+---
+
+#### **🔹 Alerts & Dialogs**
+- [] **AlertDialog**  
+- [] **SnackBar**  
+- [] **BottomSheet**  
+- [] **ModalBottomSheet**  
+- [] **SimpleDialog**  
+- [] **Toast (via third-party package)**  
+
+---
+
+#### **🔹 State Management**
+- [] **Provider**  
+- [] **Riverpod**  
+- [] **GetX**  
+- [] **Bloc**  
+- [] **InheritedWidget**  
+- [] **ChangeNotifier**  
+- [] **StatefulWidget**  
+
+---
+
+#### **🔹 Data & API Integration**
+- [] **http (REST API requests)**  
+- [] **Dio**  
+- [] **WebSocket**  
+- [] **SharedPreferences**  
+- [] **Hive**  
+- [] **Firebase Firestore**  
+- [] **SQLite**  
+
+---
+
+#### **🔹 Shapes & Custom Painting**
+- [] **CustomPainter**  
+- [] **ClipRRect**  
+- [] **ClipOval**  
+- [] **ClipPath**  
+- [] **Transform**  
+
+---
+
+#### **🔹 Media & Maps**
+- [] **VideoPlayer**  
+- [] **WebView**  
+- [] **Google Maps**  
+- [] **ImagePicker**  
+
+---
+
