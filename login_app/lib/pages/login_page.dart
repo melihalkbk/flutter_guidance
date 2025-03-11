@@ -46,20 +46,20 @@ class _LoginPageState extends State<LoginPage> {
         if (user != null) {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
-              content: Text("Login successful"),
+              content: Text("✅ Login successful"),
               backgroundColor: Colors.green,
               duration: Duration(seconds: 2),
             ),
           );
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (context) => LoginPage()),
+            MaterialPageRoute(builder: (context) => const LoginPage()),
           );
         } else {
-          _showErrorMessage("Login failed. Please check your credentials.");
+          _showErrorMessage("❌ Login failed. Please check your credentials.");
         }
       } catch (e) {
-        _showErrorMessage("An error occurred: $e");
+        _showErrorMessage("⚠️ An error occurred: $e");
       }
 
       setState(() => _isLoading = false);
@@ -74,17 +74,41 @@ class _LoginPageState extends State<LoginPage> {
     if (user != null) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text("Google Sign-In successful"),
+          content: Text("✅ Google Sign-In successful"),
           backgroundColor: Colors.green,
           duration: Duration(seconds: 2),
         ),
       );
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => LoginPage()),
+        MaterialPageRoute(builder: (context) => const LoginPage()),
       );
     } else {
-      _showErrorMessage("Google Sign-In failed.");
+      _showErrorMessage("❌ Google Sign-In failed.");
+    }
+
+    setState(() => _isLoading = false);
+  }
+
+  void _signInWithFacebook() async {
+    setState(() => _isLoading = true);
+
+    var user = await _authService.signInWithFacebook();
+
+    if (user != null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("✅ Facebook Sign-In successful"),
+          backgroundColor: Colors.green,
+          duration: Duration(seconds: 2),
+        ),
+      );
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const LoginPage()),
+      );
+    } else {
+      _showErrorMessage("❌ Facebook Sign-In failed.");
     }
 
     setState(() => _isLoading = false);
@@ -143,7 +167,7 @@ class _LoginPageState extends State<LoginPage> {
                           child: ElevatedButton.icon(
                             onPressed: _signInWithGoogle,
                             icon: Image.asset(
-                              'assets/googleLogo.png',
+                              'assets/googleLogo.png', // Ensure this exists
                               height: 24,
                             ),
                             label: const Text('Sign in with Google'),
@@ -151,6 +175,23 @@ class _LoginPageState extends State<LoginPage> {
                               backgroundColor: Colors.white,
                               foregroundColor: Colors.black,
                               side: const BorderSide(color: Colors.grey),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        SizedBox(
+                          width: double.infinity,
+                          height: 45,
+                          child: ElevatedButton.icon(
+                            onPressed: _signInWithFacebook,
+                            icon: Image.asset(
+                              'assets/facebookLogo.png',
+                              height: 24,
+                            ),
+                            label: const Text('Sign in with Facebook'),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.blue,
+                              foregroundColor: Colors.white,
                             ),
                           ),
                         ),
