@@ -13,10 +13,10 @@
 - [X] **Align**  
 - [X] **Center**  
 - [X] **SizedBox**  
-- [] **Padding**  
-- [] **Margin (via Container)**  
-- [] **Container**  
-- [] **Card**  
+- [X] **Padding**  
+- [X] **Margin (via Container)**  
+- [X] **Container**  
+- [X] **Card**  
 - [] **Divider**  
 - [] **Spacer**  
 - [] **AspectRatio**  

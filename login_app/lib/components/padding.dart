@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-class SizedBoxView extends StatelessWidget {
-  const SizedBoxView({super.key});
+class PaddingView extends StatelessWidget {
+  const PaddingView({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("SizedBox in Flutter")),
+      appBar: AppBar(title: const Text("Padding in Flutter")),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(
@@ -14,12 +14,12 @@ class SizedBoxView extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Text(
-                "📌 SizedBox Widget",
+                "📌 Padding Widget",
                 style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 8),
               const Text(
-                "SizedBox is used to create fixed-size empty spaces or to constrain a widget's size.",
+                "Padding is used to create space inside a widget, between its content and the outside.",
                 style: TextStyle(fontSize: 16),
               ),
 
@@ -34,13 +34,9 @@ class SizedBoxView extends StatelessWidget {
                 ),
                 child: const Text(
                   "Example Usage:\n\n"
-                  "SizedBox(\n"
-                  "  width: 100,\n"
-                  "  height: 50,\n"
-                  "  child: ElevatedButton(\n"
-                  "    onPressed: () {},\n"
-                  "    child: Text('Button'),\n"
-                  "  ),\n"
+                  "Padding(\n"
+                  "  padding: EdgeInsets.all(16.0),\n"
+                  "  child: Text('This text has padding'),\n"
                   ")",
                   style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
                 ),
@@ -48,18 +44,30 @@ class SizedBoxView extends StatelessWidget {
 
               const SizedBox(height: 20),
 
-              Container(
-                width: double.infinity,
-                height: 200,
-                color: Colors.grey[200],
-                child: const Center(
-                  child: SizedBox(
-                    width: 150,
-                    height: 50,
-                    child: ElevatedButton(
-                      onPressed: null,
-                      child: Text("SizedBox Button"),
-                    ),
+              Card(
+                elevation: 4,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        "🔹 Card with Padding",
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      const Text(
+                        "This card has padding around the text. "
+                        "It helps create a clean and structured design.",
+                        style: TextStyle(fontSize: 14),
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -76,7 +84,7 @@ class SizedBoxView extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "✨ Features of SizedBox:",
+                      "✨ Features of Padding:",
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
@@ -88,7 +96,9 @@ class SizedBoxView extends StatelessWidget {
                         Icon(Icons.check_circle, color: Colors.green, size: 18),
                         SizedBox(width: 6),
                         Expanded(
-                          child: Text("Used to add space between widgets."),
+                          child: Text(
+                            "Allows spacing inside widgets for better layout.",
+                          ),
                         ),
                       ],
                     ),
@@ -98,7 +108,9 @@ class SizedBoxView extends StatelessWidget {
                         Icon(Icons.check_circle, color: Colors.green, size: 18),
                         SizedBox(width: 6),
                         Expanded(
-                          child: Text("Can constrain the size of a widget."),
+                          child: Text(
+                            "Prevents UI elements from being too close together.",
+                          ),
                         ),
                       ],
                     ),
@@ -108,7 +120,9 @@ class SizedBoxView extends StatelessWidget {
                         Icon(Icons.check_circle, color: Colors.green, size: 18),
                         SizedBox(width: 6),
                         Expanded(
-                          child: Text("Works well with Row and Column."),
+                          child: Text(
+                            "Can be applied to any widget, including text and images.",
+                          ),
                         ),
                       ],
                     ),
@@ -118,7 +132,9 @@ class SizedBoxView extends StatelessWidget {
                         Icon(Icons.check_circle, color: Colors.green, size: 18),
                         SizedBox(width: 6),
                         Expanded(
-                          child: Text("Can be used as an invisible spacer."),
+                          child: Text(
+                            "Supports individual padding values (left, top, right, bottom).",
+                          ),
                         ),
                       ],
                     ),

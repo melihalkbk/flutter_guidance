@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-class SizedBoxView extends StatelessWidget {
-  const SizedBoxView({super.key});
+class CardView extends StatelessWidget {
+  const CardView({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("SizedBox in Flutter")),
+      appBar: AppBar(title: const Text("Card in Flutter")),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(
@@ -14,12 +14,13 @@ class SizedBoxView extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Text(
-                "📌 SizedBox Widget",
+                "📌 Card Widget",
                 style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 8),
               const Text(
-                "SizedBox is used to create fixed-size empty spaces or to constrain a widget's size.",
+                "The Card widget is used to create material-style cards in Flutter. "
+                "It provides elevation, border radius, and background color support.",
                 style: TextStyle(fontSize: 16),
               ),
 
@@ -34,12 +35,14 @@ class SizedBoxView extends StatelessWidget {
                 ),
                 child: const Text(
                   "Example Usage:\n\n"
-                  "SizedBox(\n"
-                  "  width: 100,\n"
-                  "  height: 50,\n"
-                  "  child: ElevatedButton(\n"
-                  "    onPressed: () {},\n"
-                  "    child: Text('Button'),\n"
+                  "Card(\n"
+                  "  elevation: 4,\n"
+                  "  shape: RoundedRectangleBorder(\n"
+                  "    borderRadius: BorderRadius.circular(10),\n"
+                  "  ),\n"
+                  "  child: Padding(\n"
+                  "    padding: EdgeInsets.all(16.0),\n"
+                  "    child: Text('This is a Card!'),\n"
                   "  ),\n"
                   ")",
                   style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
@@ -48,17 +51,37 @@ class SizedBoxView extends StatelessWidget {
 
               const SizedBox(height: 20),
 
-              Container(
-                width: double.infinity,
-                height: 200,
-                color: Colors.grey[200],
-                child: const Center(
-                  child: SizedBox(
-                    width: 150,
-                    height: 50,
-                    child: ElevatedButton(
-                      onPressed: null,
-                      child: Text("SizedBox Button"),
+              Center(
+                child: Card(
+                  elevation: 6,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Icon(
+                          Icons.credit_card,
+                          size: 40,
+                          color: Colors.blue,
+                        ),
+                        const SizedBox(height: 10),
+                        const Text(
+                          "This is a Material Card",
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 6),
+                        const Text(
+                          "Cards are useful for grouping related content.",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(fontSize: 14),
+                        ),
+                      ],
                     ),
                   ),
                 ),
@@ -76,7 +99,7 @@ class SizedBoxView extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "✨ Features of SizedBox:",
+                      "✨ Features of Card:",
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
@@ -88,7 +111,7 @@ class SizedBoxView extends StatelessWidget {
                         Icon(Icons.check_circle, color: Colors.green, size: 18),
                         SizedBox(width: 6),
                         Expanded(
-                          child: Text("Used to add space between widgets."),
+                          child: Text("Supports elevation for shadow effects."),
                         ),
                       ],
                     ),
@@ -98,7 +121,9 @@ class SizedBoxView extends StatelessWidget {
                         Icon(Icons.check_circle, color: Colors.green, size: 18),
                         SizedBox(width: 6),
                         Expanded(
-                          child: Text("Can constrain the size of a widget."),
+                          child: Text(
+                            "Can have rounded corners with BorderRadius.",
+                          ),
                         ),
                       ],
                     ),
@@ -108,7 +133,7 @@ class SizedBoxView extends StatelessWidget {
                         Icon(Icons.check_circle, color: Colors.green, size: 18),
                         SizedBox(width: 6),
                         Expanded(
-                          child: Text("Works well with Row and Column."),
+                          child: Text("Allows padding for structured layout."),
                         ),
                       ],
                     ),
@@ -118,7 +143,9 @@ class SizedBoxView extends StatelessWidget {
                         Icon(Icons.check_circle, color: Colors.green, size: 18),
                         SizedBox(width: 6),
                         Expanded(
-                          child: Text("Can be used as an invisible spacer."),
+                          child: Text(
+                            "Easily customizable with color and shape.",
+                          ),
                         ),
                       ],
                     ),

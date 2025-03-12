@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-class SizedBoxView extends StatelessWidget {
-  const SizedBoxView({super.key});
+class MarginContainerView extends StatelessWidget {
+  const MarginContainerView({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("SizedBox in Flutter")),
+      appBar: AppBar(title: const Text("Margin vs Padding in Flutter")),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(
@@ -14,12 +14,12 @@ class SizedBoxView extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Text(
-                "📌 SizedBox Widget",
+                "📌 Margin vs Padding in Container",
                 style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 8),
               const Text(
-                "SizedBox is used to create fixed-size empty spaces or to constrain a widget's size.",
+                "Margin creates space outside a widget, while Padding creates space inside a widget.",
                 style: TextStyle(fontSize: 16),
               ),
 
@@ -34,13 +34,11 @@ class SizedBoxView extends StatelessWidget {
                 ),
                 child: const Text(
                   "Example Usage:\n\n"
-                  "SizedBox(\n"
-                  "  width: 100,\n"
-                  "  height: 50,\n"
-                  "  child: ElevatedButton(\n"
-                  "    onPressed: () {},\n"
-                  "    child: Text('Button'),\n"
-                  "  ),\n"
+                  "Container(\n"
+                  "  margin: EdgeInsets.all(16.0),\n"
+                  "  padding: EdgeInsets.all(8.0),\n"
+                  "  color: Colors.blue,\n"
+                  "  child: Text('This container has margin and padding'),\n"
                   ")",
                   style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
                 ),
@@ -48,20 +46,34 @@ class SizedBoxView extends StatelessWidget {
 
               const SizedBox(height: 20),
 
-              Container(
-                width: double.infinity,
-                height: 200,
-                color: Colors.grey[200],
-                child: const Center(
-                  child: SizedBox(
-                    width: 150,
-                    height: 50,
-                    child: ElevatedButton(
-                      onPressed: null,
-                      child: Text("SizedBox Button"),
+              Row(
+                children: [
+                  Container(
+                    margin: const EdgeInsets.all(16),
+                    color: Colors.blue,
+                    width: 100,
+                    height: 100,
+                    child: const Center(
+                      child: Text(
+                        "Margin",
+                        style: TextStyle(color: Colors.white),
+                      ),
                     ),
                   ),
-                ),
+
+                  Container(
+                    padding: const EdgeInsets.all(16),
+                    color: Colors.green,
+                    width: 100,
+                    height: 100,
+                    child: const Center(
+                      child: Text(
+                        "Padding",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                  ),
+                ],
               ),
 
               const SizedBox(height: 20),
@@ -76,7 +88,7 @@ class SizedBoxView extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "✨ Features of SizedBox:",
+                      "✨ Features of Margin vs Padding:",
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
@@ -88,7 +100,7 @@ class SizedBoxView extends StatelessWidget {
                         Icon(Icons.check_circle, color: Colors.green, size: 18),
                         SizedBox(width: 6),
                         Expanded(
-                          child: Text("Used to add space between widgets."),
+                          child: Text("Margin adds space outside the widget."),
                         ),
                       ],
                     ),
@@ -98,7 +110,7 @@ class SizedBoxView extends StatelessWidget {
                         Icon(Icons.check_circle, color: Colors.green, size: 18),
                         SizedBox(width: 6),
                         Expanded(
-                          child: Text("Can constrain the size of a widget."),
+                          child: Text("Padding adds space inside the widget."),
                         ),
                       ],
                     ),
@@ -108,7 +120,9 @@ class SizedBoxView extends StatelessWidget {
                         Icon(Icons.check_circle, color: Colors.green, size: 18),
                         SizedBox(width: 6),
                         Expanded(
-                          child: Text("Works well with Row and Column."),
+                          child: Text(
+                            "Margin does not affect the widget’s internal size.",
+                          ),
                         ),
                       ],
                     ),
@@ -118,7 +132,9 @@ class SizedBoxView extends StatelessWidget {
                         Icon(Icons.check_circle, color: Colors.green, size: 18),
                         SizedBox(width: 6),
                         Expanded(
-                          child: Text("Can be used as an invisible spacer."),
+                          child: Text(
+                            "Padding reduces the space inside the widget.",
+                          ),
                         ),
                       ],
                     ),

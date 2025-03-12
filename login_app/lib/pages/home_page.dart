@@ -13,6 +13,10 @@ import '../components/wrap.dart';
 import '../components/align.dart';
 import '../components/center.dart';
 import '../components/sizedbox.dart';
+import '../components/padding.dart';
+import '../components/margin_via_container.dart';
+import '../components/container.dart';
+import '../components/card.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({super.key});
@@ -29,7 +33,7 @@ class HomePage extends StatelessWidget {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Text("Home"),
+            const Text("Fluttter Widgets App"),
             ElevatedButton(
               onPressed: () async {
                 await _authService.signOut();
@@ -75,7 +79,6 @@ class HomePage extends StatelessWidget {
               ),
               const SizedBox(height: 40),
 
-              // Column Button
               Center(
                 child: SizedBox(
                   width: double.infinity,
@@ -98,7 +101,6 @@ class HomePage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 20),
-
               //Row Button
               Center(
                 child: SizedBox(
@@ -349,6 +351,98 @@ class HomePage extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(vertical: 14),
                     ),
                     child: const Text("Go to SizedBox View"),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20),
+              //Padding Button
+              Center(
+                child: SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const PaddingView(),
+                        ),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blue,
+                      foregroundColor: Colors.white,
+                      padding: const EdgeInsets.symmetric(vertical: 14),
+                    ),
+                    child: const Text("Go to Padding "),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20),
+              //Margin Via Container Button
+              Center(
+                child: SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const MarginContainerView(),
+                        ),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blue,
+                      foregroundColor: Colors.white,
+                      padding: const EdgeInsets.symmetric(vertical: 14),
+                    ),
+                    child: const Text("Go to Margin Via Container "),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20),
+              //Container Button
+              Center(
+                child: SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const ContainerView(),
+                        ),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blue,
+                      foregroundColor: Colors.white,
+                      padding: const EdgeInsets.symmetric(vertical: 14),
+                    ),
+                    child: const Text("Go to Container "),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20),
+              //Card Button
+              Center(
+                child: SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const CardView(),
+                        ),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blue,
+                      foregroundColor: Colors.white,
+                      padding: const EdgeInsets.symmetric(vertical: 14),
+                    ),
+                    child: const Text("Go to Card "),
                   ),
                 ),
               ),
