@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../services/auth_service.dart';
 import '../components/column.dart';
 import '../components/row.dart';
@@ -80,7 +81,103 @@ class HomePage extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(height: 40),
+              const SizedBox(height: 20),
+
+              // About This App
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: Colors.blue[50],
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      "📌 About This App",
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    const Text(
+                      "This app is designed to help Flutter developers understand various UI components. "
+                      "Each widget is explained with examples, making it easy to learn and implement in real projects.",
+                      style: TextStyle(fontSize: 16),
+                    ),
+                    const SizedBox(height: 10),
+                    const Text(
+                      "🚀 Features:",
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 6),
+                    Row(
+                      children: const [
+                        Icon(Icons.check_circle, color: Colors.green, size: 18),
+                        SizedBox(width: 6),
+                        Expanded(
+                          child: Text(
+                            "Learn 50+ Flutter widgets with examples.",
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 6),
+                    Row(
+                      children: const [
+                        Icon(Icons.check_circle, color: Colors.green, size: 18),
+                        SizedBox(width: 6),
+                        Expanded(
+                          child: Text(
+                            "Each widget has a detailed explanation and sample usage.",
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 6),
+                    Row(
+                      children: const [
+                        Icon(Icons.check_circle, color: Colors.green, size: 18),
+                        SizedBox(width: 6),
+                        Expanded(
+                          child: Text(
+                            "Easy navigation between widget examples.",
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 10),
+
+                    // GitHub Repository Button
+                    Center(
+                      child: ElevatedButton.icon(
+                        onPressed: () {
+                          final Uri githubUrl = Uri.parse(
+                            "https://github.com/melihalkbk/login-app",
+                          );
+                          launchUrl(githubUrl);
+                        },
+                        icon: const Icon(Icons.code, color: Colors.white),
+                        label: const Text("View Source Code"),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.black,
+                          foregroundColor: Colors.white,
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 12,
+                            horizontal: 20,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 20),
 
               Center(
                 child: SizedBox(
