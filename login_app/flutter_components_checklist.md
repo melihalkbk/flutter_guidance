@@ -17,9 +17,9 @@
 - [X] **Margin (via Container)**  
 - [X] **Container**  
 - [X] **Card**  
-- [] **Divider**  
-- [] **Spacer**  
-- [] **AspectRatio**  
+- [X] **Divider**  
+- [X] **Spacer**  
+- [X] **AspectRatio**  
 
 ---
 

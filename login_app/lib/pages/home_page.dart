@@ -17,6 +17,9 @@ import '../components/padding.dart';
 import '../components/margin_via_container.dart';
 import '../components/container.dart';
 import '../components/card.dart';
+import '../components/divider.dart';
+import '../components/spacer.dart';
+import '../components/aspect_ratio.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({super.key});
@@ -443,6 +446,75 @@ class HomePage extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(vertical: 14),
                     ),
                     child: const Text("Go to Card "),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20),
+              //Divider Button
+              Center(
+                child: SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const DividerView(),
+                        ),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blue,
+                      foregroundColor: Colors.white,
+                      padding: const EdgeInsets.symmetric(vertical: 14),
+                    ),
+                    child: const Text("Go to Divider "),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20),
+              //Spacer Button
+              Center(
+                child: SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const SpacerView(),
+                        ),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blue,
+                      foregroundColor: Colors.white,
+                      padding: const EdgeInsets.symmetric(vertical: 14),
+                    ),
+                    child: const Text("Go to Spacer "),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20),
+              //Aspect Ratio Button
+              Center(
+                child: SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const AspectRatioView(),
+                        ),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blue,
+                      foregroundColor: Colors.white,
+                      padding: const EdgeInsets.symmetric(vertical: 14),
+                    ),
+                    child: const Text("Go to Aspect Ratio "),
                   ),
                 ),
               ),
