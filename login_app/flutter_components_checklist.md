@@ -27,10 +27,10 @@
 - [X] **Text**  
 - [X] **RichText**  
 - [X] **SelectableText**  
-- [] **TextField**  
-- [] **Image**  
-- [] **Icon**  
-- [] **CircleAvatar**  
+- [X] **TextField**  
+- [X] **Image**  
+- [X] **Icon**  
+- [X] **CircleAvatar**  
 
 ---
 

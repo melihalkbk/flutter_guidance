@@ -24,6 +24,10 @@ import '../components/aspect_ratio.dart';
 import '../components/text.dart';
 import '../components/richtext.dart';
 import '../components/selectable_text.dart';
+import '../components/textfield.dart';
+import '../components/image.dart';
+import '../components/icon.dart';
+import '../components/circle_avatar.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({super.key});
@@ -684,6 +688,98 @@ class HomePage extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(vertical: 14),
                     ),
                     child: const Text("Go to Selectable Text "),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20),
+              //Textfield Button
+              Center(
+                child: SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const TextFieldView(),
+                        ),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blue,
+                      foregroundColor: Colors.white,
+                      padding: const EdgeInsets.symmetric(vertical: 14),
+                    ),
+                    child: const Text("Go to TextField "),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20),
+              //Image Button
+              Center(
+                child: SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const ImageView(),
+                        ),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blue,
+                      foregroundColor: Colors.white,
+                      padding: const EdgeInsets.symmetric(vertical: 14),
+                    ),
+                    child: const Text("Go to Image "),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20),
+              //Icon Button
+              Center(
+                child: SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const IconView(),
+                        ),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blue,
+                      foregroundColor: Colors.white,
+                      padding: const EdgeInsets.symmetric(vertical: 14),
+                    ),
+                    child: const Text("Go to Icon"),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20),
+              //CircleAvatar Button
+              Center(
+                child: SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const CircleAvatarView(),
+                        ),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blue,
+                      foregroundColor: Colors.white,
+                      padding: const EdgeInsets.symmetric(vertical: 14),
+                    ),
+                    child: const Text("Go to Circle Avatar"),
                   ),
                 ),
               ),
