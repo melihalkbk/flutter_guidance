@@ -24,9 +24,9 @@
 ---
 
 #### **🔹 Text & Images**
-- [] **Text**  
-- [] **RichText**  
-- [] **SelectableText**  
+- [X] **Text**  
+- [X] **RichText**  
+- [X] **SelectableText**  
 - [] **TextField**  
 - [] **Image**  
 - [] **Icon**  

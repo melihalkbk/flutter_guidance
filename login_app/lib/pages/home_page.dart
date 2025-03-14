@@ -21,6 +21,9 @@ import '../components/card.dart';
 import '../components/divider.dart';
 import '../components/spacer.dart';
 import '../components/aspect_ratio.dart';
+import '../components/text.dart';
+import '../components/richtext.dart';
+import '../components/selectable_text.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({super.key});
@@ -612,6 +615,75 @@ class HomePage extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(vertical: 14),
                     ),
                     child: const Text("Go to Aspect Ratio "),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20),
+              //Text Button
+              Center(
+                child: SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const TextView(),
+                        ),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blue,
+                      foregroundColor: Colors.white,
+                      padding: const EdgeInsets.symmetric(vertical: 14),
+                    ),
+                    child: const Text("Go to Text "),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20),
+              //RichText Button
+              Center(
+                child: SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const RichTextView(),
+                        ),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blue,
+                      foregroundColor: Colors.white,
+                      padding: const EdgeInsets.symmetric(vertical: 14),
+                    ),
+                    child: const Text("Go to RichText "),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20),
+              //SelectableText Button
+              Center(
+                child: SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const SelectableTextView(),
+                        ),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blue,
+                      foregroundColor: Colors.white,
+                      padding: const EdgeInsets.symmetric(vertical: 14),
+                    ),
+                    child: const Text("Go to Selectable Text "),
                   ),
                 ),
               ),
