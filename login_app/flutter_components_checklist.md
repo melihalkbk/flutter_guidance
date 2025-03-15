@@ -72,12 +72,12 @@
 - [X] **AnimatedContainer**  
 - [X] **AnimatedOpacity**  
 - [X] **AnimatedAlign**  
-- [] **AnimatedCrossFade**  
-- [] **AnimatedSwitcher**  
-- [] **Hero**  
-- [] **FadeTransition**  
-- [] **SlideTransition**  
-- [] **ScaleTransition**  
+- [X] **AnimatedCrossFade**  
+- [X] **AnimatedSwitcher**  
+- [X] **Hero**  
+- [X] **FadeTransition**  
+- [X] **SlideTransition**  
+- [X] **ScaleTransition**  
 
 ---
 

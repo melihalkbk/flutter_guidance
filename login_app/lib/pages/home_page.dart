@@ -56,6 +56,9 @@ import '../components/animated_align.dart';
 import '../components/animated_cross_fade.dart';
 import '../components/animated_switcher.dart';
 import '../components/hero.dart';
+import '../components/fade_transition.dart';
+import '../components/slide_transition.dart';
+import '../components/scale_transition.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -142,6 +145,9 @@ class _HomePageState extends State<HomePage> {
       {"title": "Animated Cross Fade", "page": const AnimatedCrossFadeView()},
       {"title": "Animated Switcher", "page": const AnimatedSwitcherView()},
       {"title": "Hero", "page": const HeroView()},
+      {"title": "Fade Transition", "page": const FadeTransitionView()},
+      {"title": "Slide Transition", "page": const SlideTransitionView()},
+      {"title": "Scale Transition", "page": const ScaleTransitionView()},
     ];
   }
 
