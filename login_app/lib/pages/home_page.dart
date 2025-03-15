@@ -59,6 +59,10 @@ import '../components/hero.dart';
 import '../components/fade_transition.dart';
 import '../components/slide_transition.dart';
 import '../components/scale_transition.dart';
+import '../components/gesture_detector.dart';
+import '../components/inkwell.dart';
+import '../components/dismissible.dart';
+import '../components/draggable.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -148,6 +152,10 @@ class _HomePageState extends State<HomePage> {
       {"title": "Fade Transition", "page": const FadeTransitionView()},
       {"title": "Slide Transition", "page": const SlideTransitionView()},
       {"title": "Scale Transition", "page": const ScaleTransitionView()},
+      {"title": "Gesture Detector", "page": const GestureDetectorView()},
+      {"title": "Inkwell", "page": const InkWellView()},
+      {"title": "Dismissible", "page": const DismissibleView()},
+      {"title": "Draggable", "page": const DraggableView()},
     ];
   }
 

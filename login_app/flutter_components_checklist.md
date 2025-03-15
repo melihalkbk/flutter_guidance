@@ -82,10 +82,10 @@
 ---
 
 #### **🔹 Gestures**
-- [] **GestureDetector**  
-- [] **InkWell**  
-- [] **Dismissible**  
-- [] **Draggable**  
+- [X] **GestureDetector**  
+- [X] **InkWell**  
+- [X] **Dismissible**  
+- [X] **Draggable**  
 
 ---
 
