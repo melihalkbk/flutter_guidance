@@ -66,6 +66,9 @@ import '../components/draggable.dart';
 import '../components/alert_dialog.dart';
 import '../components/snack_bar.dart';
 import '../components/bottom_sheet.dart';
+import '../components/modal_bottom_sheet.dart';
+import '../components/simple_dialog.dart';
+import '../components/toast.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -162,6 +165,9 @@ class _HomePageState extends State<HomePage> {
       {"title": "Alert Dialog", "page": const AlertDialogView()},
       {"title": "Snack Bar", "page": const SnackBarView()},
       {"title": "Bottom Sheet", "page": const BottomSheetView()},
+      {"title": "Modal Bottom Sheet", "page": const ModalBottomSheetView()},
+      {"title": "Simple Dialog", "page": const SimpleDialogView()},
+      {"title": "Toast", "page": const ToastExampleView()},
     ];
   }
 

@@ -39,6 +39,7 @@ dependencies:
   firebase_auth: ^5.5.1
   google_sign_in: ^6.3.0
   flutter_facebook_auth: ^7.1.1
+  fluttertoast: ^8.2.2
 
 dev_dependencies:
   flutter_test:
