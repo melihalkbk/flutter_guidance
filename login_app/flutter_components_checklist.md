@@ -35,9 +35,9 @@
 ---
 
 #### **🔹 Buttons**
-- [] **ElevatedButton**  
-- [] **TextButton**  
-- [] **OutlinedButton**  
+- [X] **ElevatedButton**  
+- [X] **TextButton**  
+- [X] **OutlinedButton**  
 - [] **FloatingActionButton (FAB)**  
 - [] **IconButton**  
 - [] **PopupMenuButton**  
