@@ -45,11 +45,11 @@
 ---
 
 #### **🔹 Input & Controls**
-- [] **TextFormField**  
-- [] **Checkbox**  
-- [] **Radio**  
-- [] **Switch**  
-- [] **Slider**  
+- [X] **TextFormField**  
+- [X] **Checkbox**  
+- [X] **Radio**  
+- [X] **Switch**  
+- [X] **Slider**  
 - [] **DatePicker**  
 - [] **DropdownButton**  
 - [] **Autocomplete**  

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:login_app/components/elevated_button.dart';
+import 'package:login_app/components/range_slider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../services/auth_service.dart';
 import '../components/column.dart';
@@ -39,6 +40,9 @@ import '../components/checkbox.dart';
 import '../components/radio.dart';
 import '../components/switch.dart';
 import '../components/slider.dart';
+import '../components/datepicker.dart';
+import '../components/drop_down_button.dart';
+import '../components/auto_complete.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -105,6 +109,10 @@ class _HomePageState extends State<HomePage> {
       {"title": "Radio", "page": const RadioView()},
       {"title": "Switch", "page": const SwitchView()},
       {"title": "Slider", "page": const SliderView()},
+      {"title": "Date Picker", "page": const DatePickerView()},
+      {"title": "Dropdown Button", "page": const DropdownButtonView()},
+      {"title": "Auto Complete", "page": const AutocompleteView()},
+      {"title": "Ranger Slider", "page": const RangeSliderView()},
     ];
   }
 
