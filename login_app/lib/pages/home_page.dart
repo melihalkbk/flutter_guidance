@@ -34,6 +34,11 @@ import '../components/outlined_button.dart';
 import '../components/floating_action_button.dart';
 import '../components/icon_button.dart';
 import '../components/popup_menu.dart';
+import '../components/textfield_form.dart';
+import '../components/checkbox.dart';
+import '../components/radio.dart';
+import '../components/switch.dart';
+import '../components/slider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -95,6 +100,11 @@ class _HomePageState extends State<HomePage> {
       },
       {"title": "Icon Button", "page": const IconButtonView()},
       {"title": "Popup Menu Button", "page": const PopupMenuButtonView()},
+      {"title": "TextForm Field Button", "page": const TextFormFieldView()},
+      {"title": "CheckBox", "page": const CheckboxView()},
+      {"title": "Radio", "page": const RadioView()},
+      {"title": "Switch", "page": const SwitchView()},
+      {"title": "Slider", "page": const SliderView()},
     ];
   }
 
