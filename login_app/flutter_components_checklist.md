@@ -59,12 +59,12 @@
 
 #### **🔹 Navigation & Routing**
 - [X] **Navigator**  
-- [] **MaterialPageRoute**  
-- [] **Named Routes**  
-- [] **BottomNavigationBar**  
-- [] **TabBar**  
-- [] **Drawer**  
-- [] **AppBar**  
+- [X] **MaterialPageRoute**  
+- [X] **Named Routes**  
+- [X] **BottomNavigationBar**  
+- [X] **TabBar**  
+- [X] **Drawer**  
+- [X] **AppBar**  
 
 ---
 

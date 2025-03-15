@@ -47,6 +47,9 @@ import '../components/navigator.dart';
 import '../components/material_page_route.dart';
 import '../components/named_routes.dart';
 import '../components/bottom_navigation_bar.dart';
+import '../components/tab_bar.dart';
+import '../components/drawer.dart';
+import '../components/app_bar.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -124,6 +127,9 @@ class _HomePageState extends State<HomePage> {
         "title": "Bottom Navigation Bar ",
         "page": const BottomNavigationBarView(),
       },
+      {"title": "Tab Bar", "page": const TabBarViewExample()},
+      {"title": "Drawer", "page": const DrawerExample()},
+      {"title": "App Bar", "page": const AppBarExample()},
     ];
   }
 
