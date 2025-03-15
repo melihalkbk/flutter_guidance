@@ -97,27 +97,6 @@ class _LoginPageState extends State<LoginPage> {
     setState(() => _isLoading = false);
   }
 
-  Future<void> _signInWithFacebook() async {
-    setState(() => _isLoading = true);
-
-    var user = await _authService.signInWithFacebook();
-
-    if (user != null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text("✅ Facebook Sign-In successful"),
-          backgroundColor: Colors.green,
-          duration: Duration(seconds: 2),
-        ),
-      );
-      _navigateToHome();
-    } else {
-      _showErrorMessage("❌ Facebook Sign-In failed.");
-    }
-
-    setState(() => _isLoading = false);
-  }
-
   Future<void> _signInAsGuest() async {
     if (_nameController.text.trim().isEmpty ||
         _surnameController.text.trim().isEmpty) {
@@ -146,6 +125,66 @@ class _LoginPageState extends State<LoginPage> {
     }
 
     setState(() => _isLoading = false);
+  }
+
+  void _showForgotPasswordDialog() {
+    final emailController = TextEditingController();
+
+    showDialog(
+      context: context,
+      builder:
+          (context) => AlertDialog(
+            title: const Text("Reset Password"),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Text(
+                  "Enter your email address and we'll send you a link to reset your password.",
+                ),
+                const SizedBox(height: 20),
+                TextField(
+                  controller: emailController,
+                  decoration: const InputDecoration(
+                    labelText: "Email",
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+              ],
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: const Text("Cancel"),
+              ),
+              ElevatedButton(
+                onPressed: () async {
+                  if (emailController.text.isNotEmpty) {
+                    try {
+                      await _authService.sendPasswordResetEmail(
+                        emailController.text.trim(),
+                      );
+                      Navigator.pop(context);
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text("✅ Password reset email sent!"),
+                          backgroundColor: Colors.green,
+                        ),
+                      );
+                    } catch (e) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text("⚠️ Error: $e"),
+                          backgroundColor: Colors.red,
+                        ),
+                      );
+                    }
+                  }
+                },
+                child: const Text("Send Reset Link"),
+              ),
+            ],
+          ),
+    );
   }
 
   @override
@@ -194,7 +233,17 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 20),
+                TextButton(
+                  onPressed: _showForgotPasswordDialog,
+                  child: const Text(
+                    "Forgot Password?",
+                    style: TextStyle(
+                      color: Colors.blue,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 10),
                 _isLoading
                     ? const CircularProgressIndicator()
                     : Column(
@@ -222,23 +271,6 @@ class _LoginPageState extends State<LoginPage> {
                               backgroundColor: Colors.white,
                               foregroundColor: Colors.black,
                               side: const BorderSide(color: Colors.grey),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(height: 10),
-                        SizedBox(
-                          width: double.infinity,
-                          height: 45,
-                          child: ElevatedButton.icon(
-                            onPressed: _signInWithFacebook,
-                            icon: Image.asset(
-                              'assets/facebookLogo.png',
-                              height: 24,
-                            ),
-                            label: const Text('Sign in with Facebook'),
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.blue,
-                              foregroundColor: Colors.white,
                             ),
                           ),
                         ),
