@@ -73,6 +73,9 @@ import '../components/http.dart';
 import '../components/dio.dart';
 import '../components/web_socket.dart';
 import '../components/shared_preferences.dart';
+import '../components/custom_painter.dart';
+import '../components/clip_rrect.dart';
+import '../components/clip_oval.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -176,6 +179,9 @@ class _HomePageState extends State<HomePage> {
       {"title": "Dio", "page": const DioExampleView()},
       {"title": "Web Socket", "page": const WebSocketExampleView()},
       {"title": "Shared Preferences", "page": const SharedPreferencesExample()},
+      {"title": "Custom Painter", "page": const AnimatedPainterExample()},
+      {"title": "Clip RRect", "page": const ClipRRectExample()},
+      {"title": "Clip Oval", "page": const ClipOvalExample()},
     ];
   }
 

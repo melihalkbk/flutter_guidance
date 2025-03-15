@@ -115,7 +115,7 @@
 - [X] **Dio**  
 - [X] **WebSocket**  
 - [X] **SharedPreferences**  
-- [] **Hive**  
+- [X] **Hive**  
 - [] **Firebase Firestore**  
 - [] **SQLite**  
 

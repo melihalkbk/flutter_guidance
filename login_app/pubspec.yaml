@@ -43,10 +43,15 @@ dependencies:
   dio: ^5.4.0
   web_socket_channel: ^2.4.0 
   shared_preferences: ^2.2.2
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
+  cloud_firestore: ^4.15.5
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  hive_generator: ^2.0.1
+  build_runner: ^2.4.6
 
   
   
