@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-class NavigatorView extends StatelessWidget {
-  const NavigatorView({super.key});
+class MaterialPageRouteView extends StatelessWidget {
+  const MaterialPageRouteView({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Navigator in Flutter")),
+      appBar: AppBar(title: const Text("MaterialPageRoute in Flutter")),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -14,14 +14,14 @@ class NavigatorView extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Text(
-                "📌 Navigator Widget",
+                "📌 MaterialPageRoute",
                 style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 8),
               const Text(
-                "The Navigator widget manages a stack of pages and allows "
-                "navigation between different screens in a Flutter app. "
-                "It supports push, pop, and named routes for seamless navigation.",
+                "MaterialPageRoute is a widget that provides navigation between screens "
+                "with a material-style transition. It helps in pushing a new route onto "
+                "the navigation stack with smooth animations.",
                 style: TextStyle(fontSize: 16),
               ),
               const SizedBox(height: 20),
@@ -38,12 +38,10 @@ class NavigatorView extends StatelessWidget {
                   "// Navigate to a new screen\n"
                   "Navigator.push(\n"
                   "  context,\n"
-                  "  MaterialPageRoute(builder: (context) => NewScreen()),\n"
+                  "  MaterialPageRoute(builder: (context) => SecondScreen()),\n"
                   ");\n\n"
                   "// Go back to the previous screen\n"
-                  "Navigator.pop(context);\n\n"
-                  "// Using named routes\n"
-                  "Navigator.pushNamed(context, '/home');",
+                  "Navigator.pop(context);",
                   style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
                 ),
               ),
@@ -65,7 +63,7 @@ class NavigatorView extends StatelessWidget {
                     foregroundColor: Colors.white,
                     padding: const EdgeInsets.symmetric(vertical: 14),
                   ),
-                  child: const Text("Go to Second Screen"),
+                  child: const Text("Navigate to Second Screen"),
                 ),
               ),
 
@@ -82,7 +80,7 @@ class NavigatorView extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "✨ Features of Navigator Widget:",
+                      "✨ Features of MaterialPageRoute:",
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
@@ -93,7 +91,7 @@ class NavigatorView extends StatelessWidget {
                       children: [
                         Icon(Icons.check_circle, color: Colors.green, size: 18),
                         SizedBox(width: 6),
-                        Expanded(child: Text("Manages a stack of routes.")),
+                        Expanded(child: Text("Provides smooth transitions.")),
                       ],
                     ),
                     SizedBox(height: 6),
@@ -102,7 +100,7 @@ class NavigatorView extends StatelessWidget {
                         Icon(Icons.check_circle, color: Colors.green, size: 18),
                         SizedBox(width: 6),
                         Expanded(
-                          child: Text("Supports push and pop for navigation."),
+                          child: Text("Supports push and pop navigation."),
                         ),
                       ],
                     ),
@@ -113,7 +111,7 @@ class NavigatorView extends StatelessWidget {
                         SizedBox(width: 6),
                         Expanded(
                           child: Text(
-                            "Allows named routes for better structure.",
+                            "Allows passing arguments to new screens.",
                           ),
                         ),
                       ],

@@ -50,15 +50,15 @@
 - [X] **Radio**  
 - [X] **Switch**  
 - [X] **Slider**  
-- [] **DatePicker**  
-- [] **DropdownButton**  
-- [] **Autocomplete**  
-- [] **RangeSlider**  
+- [X] **DatePicker**  
+- [X] **DropdownButton**  
+- [X] **Autocomplete**  
+- [X] **RangeSlider**  
 
 ---
 
 #### **🔹 Navigation & Routing**
-- [] **Navigator**  
+- [X] **Navigator**  
 - [] **MaterialPageRoute**  
 - [] **Named Routes**  
 - [] **BottomNavigationBar**  

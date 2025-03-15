@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-class NavigatorView extends StatelessWidget {
-  const NavigatorView({super.key});
+class NamedRoutesView extends StatelessWidget {
+  const NamedRoutesView({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Navigator in Flutter")),
+      appBar: AppBar(title: const Text("Named Routes in Flutter")),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -14,14 +14,13 @@ class NavigatorView extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Text(
-                "📌 Navigator Widget",
+                "📌 Named Routes",
                 style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 8),
               const Text(
-                "The Navigator widget manages a stack of pages and allows "
-                "navigation between different screens in a Flutter app. "
-                "It supports push, pop, and named routes for seamless navigation.",
+                "Named Routes allow navigation using predefined route names instead of directly "
+                "using MaterialPageRoute. It simplifies app navigation management.",
                 style: TextStyle(fontSize: 16),
               ),
               const SizedBox(height: 20),
@@ -35,15 +34,10 @@ class NavigatorView extends StatelessWidget {
                 ),
                 child: const Text(
                   "Example Usage:\n\n"
-                  "// Navigate to a new screen\n"
-                  "Navigator.push(\n"
-                  "  context,\n"
-                  "  MaterialPageRoute(builder: (context) => NewScreen()),\n"
-                  ");\n\n"
-                  "// Go back to the previous screen\n"
-                  "Navigator.pop(context);\n\n"
-                  "// Using named routes\n"
-                  "Navigator.pushNamed(context, '/home');",
+                  "// Navigate to second screen\n"
+                  "Navigator.pushNamed(context, '/second');\n\n"
+                  "// Go back to previous screen\n"
+                  "Navigator.pop(context);",
                   style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
                 ),
               ),
@@ -53,19 +47,14 @@ class NavigatorView extends StatelessWidget {
               Center(
                 child: ElevatedButton(
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const SecondScreen(),
-                      ),
-                    );
+                    Navigator.pushNamed(context, '/second');
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.blue,
                     foregroundColor: Colors.white,
                     padding: const EdgeInsets.symmetric(vertical: 14),
                   ),
-                  child: const Text("Go to Second Screen"),
+                  child: const Text("Navigate to Second Screen"),
                 ),
               ),
 
@@ -82,7 +71,7 @@ class NavigatorView extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "✨ Features of Navigator Widget:",
+                      "✨ Features of Named Routes:",
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
@@ -93,16 +82,8 @@ class NavigatorView extends StatelessWidget {
                       children: [
                         Icon(Icons.check_circle, color: Colors.green, size: 18),
                         SizedBox(width: 6),
-                        Expanded(child: Text("Manages a stack of routes.")),
-                      ],
-                    ),
-                    SizedBox(height: 6),
-                    Row(
-                      children: [
-                        Icon(Icons.check_circle, color: Colors.green, size: 18),
-                        SizedBox(width: 6),
                         Expanded(
-                          child: Text("Supports push and pop for navigation."),
+                          child: Text("Simplifies navigation management."),
                         ),
                       ],
                     ),
@@ -112,10 +93,16 @@ class NavigatorView extends StatelessWidget {
                         Icon(Icons.check_circle, color: Colors.green, size: 18),
                         SizedBox(width: 6),
                         Expanded(
-                          child: Text(
-                            "Allows named routes for better structure.",
-                          ),
+                          child: Text("Reduces boilerplate code in widgets."),
                         ),
+                      ],
+                    ),
+                    SizedBox(height: 6),
+                    Row(
+                      children: [
+                        Icon(Icons.check_circle, color: Colors.green, size: 18),
+                        SizedBox(width: 6),
+                        Expanded(child: Text("Works well with deep linking.")),
                       ],
                     ),
                   ],
@@ -144,23 +131,6 @@ class NavigatorView extends StatelessWidget {
               ),
             ],
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class SecondScreen extends StatelessWidget {
-  const SecondScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text("Second Screen")),
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () => Navigator.pop(context),
-          child: const Text("Go Back"),
         ),
       ),
     );

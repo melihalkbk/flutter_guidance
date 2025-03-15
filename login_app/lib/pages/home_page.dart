@@ -43,6 +43,10 @@ import '../components/slider.dart';
 import '../components/datepicker.dart';
 import '../components/drop_down_button.dart';
 import '../components/auto_complete.dart';
+import '../components/navigator.dart';
+import '../components/material_page_route.dart';
+import '../components/named_routes.dart';
+import '../components/bottom_navigation_bar.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -113,6 +117,13 @@ class _HomePageState extends State<HomePage> {
       {"title": "Dropdown Button", "page": const DropdownButtonView()},
       {"title": "Auto Complete", "page": const AutocompleteView()},
       {"title": "Ranger Slider", "page": const RangeSliderView()},
+      {"title": "Navigator", "page": const NavigatorView()},
+      {"title": "Material Page Route", "page": const MaterialPageRouteView()},
+      {"title": "Named Routes", "page": const NamedRoutesView()},
+      {
+        "title": "Bottom Navigation Bar ",
+        "page": const BottomNavigationBarView(),
+      },
     ];
   }
 
