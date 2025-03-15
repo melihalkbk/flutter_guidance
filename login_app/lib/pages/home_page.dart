@@ -35,10 +35,118 @@ import '../components/floating_action_button.dart';
 import '../components/icon_button.dart';
 import '../components/popup_menu.dart';
 
-class HomePage extends StatelessWidget {
-  HomePage({super.key});
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
 
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   final AuthService _authService = AuthService();
+  final TextEditingController _searchController = TextEditingController();
+  List<Map<String, dynamic>> widgetList = [];
+  List<Widget> _filteredButtons = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _initializeWidgetList();
+    _filterButtons('');
+  }
+
+  void _initializeWidgetList() {
+    widgetList = [
+      {"title": "Column", "page": const ColumnView()},
+      {"title": "Row", "page": const RowView()},
+      {"title": "Stack", "page": const StackView()},
+      {"title": "ListView", "page": const ListViewView()},
+      {"title": "GridView", "page": const GridViewView()},
+      {
+        "title": "Single Child Scroll View",
+        "page": const SingleChildScrollViewExample(),
+      },
+      {"title": "Expanded", "page": const ExpandedExample()},
+      {"title": "Flexible", "page": const FlexibleExample()},
+      {"title": "Wrap", "page": const WrapExample()},
+      {"title": "Align", "page": const AlignView()},
+      {"title": "Center", "page": const CenterView()},
+      {"title": "SizedBox", "page": const SizedBoxView()},
+      {"title": "Padding", "page": const PaddingView()},
+      {"title": "Margin Via Container", "page": const MarginContainerView()},
+      {"title": "Container", "page": const ContainerView()},
+      {"title": "Card", "page": const CardView()},
+      {"title": "Divider", "page": const DividerView()},
+      {"title": "Spacer", "page": const SpacerView()},
+      {"title": "Aspect Ratio", "page": const AspectRatioView()},
+      {"title": "Text", "page": const TextView()},
+      {"title": "RichText", "page": const RichTextView()},
+      {"title": "Selectable Text", "page": const SelectableTextView()},
+      {"title": "TextField", "page": const TextFieldView()},
+      {"title": "Image", "page": const ImageView()},
+      {"title": "Icon", "page": const IconView()},
+      {"title": "Circle Avatar", "page": const CircleAvatarView()},
+      {"title": "Elevated Button", "page": const ElevatedButtonView()},
+      {"title": "Text Button", "page": const TextButtonView()},
+      {"title": "Outlined Button", "page": const OutlinedButtonView()},
+      {
+        "title": "Floating Action Button",
+        "page": const FloatingActionButtonView(),
+      },
+      {"title": "Icon Button", "page": const IconButtonView()},
+      {"title": "Popup Menu Button", "page": const PopupMenuButtonView()},
+    ];
+  }
+
+  void _filterButtons(String query) {
+    setState(() {
+      if (query.isEmpty) {
+        _filteredButtons =
+            widgetList.map((widget) => _buildButton(widget)).toList();
+      } else {
+        _filteredButtons =
+            widgetList
+                .where(
+                  (widget) => widget["title"].toString().toLowerCase().contains(
+                    query.toLowerCase(),
+                  ),
+                )
+                .map((widget) => _buildButton(widget))
+                .toList();
+      }
+    });
+  }
+
+  Widget _buildButton(Map<String, dynamic> widget) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 20),
+      child: Center(
+        child: SizedBox(
+          width: double.infinity,
+          child: ElevatedButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => widget["page"]),
+              );
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.blue,
+              foregroundColor: Colors.white,
+              padding: const EdgeInsets.symmetric(vertical: 14),
+            ),
+            child: Text("Go to ${widget["title"]}"),
+          ),
+        ),
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +158,7 @@ class HomePage extends StatelessWidget {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Text("Fluttter Widgets App"),
+            const Text("Flutter Widgets App"),
             ElevatedButton(
               onPressed: () async {
                 await _authService.signOut();
@@ -80,23 +188,23 @@ class HomePage extends StatelessWidget {
                   children: [
                     const Icon(
                       Icons.account_circle,
-                      size: 100,
+                      size: 80,
                       color: Colors.blue,
                     ),
-                    const SizedBox(height: 10),
+                    const SizedBox(height: 8),
                     Text(
                       "Welcome, $displayName!",
                       style: const TextStyle(
-                        fontSize: 22,
+                        fontSize: 20,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                   ],
                 ),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 24),
 
-              // About This App
+              // About This App section first
               Container(
                 width: double.infinity,
                 padding: const EdgeInsets.all(16),
@@ -191,743 +299,21 @@ class HomePage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 20),
-
-              Center(
-                child: SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const ColumnView(),
-                        ),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue,
-                      foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(vertical: 14),
-                    ),
-                    child: const Text("Go to Column"),
+              TextField(
+                controller: _searchController,
+                decoration: InputDecoration(
+                  hintText: 'Search widgets...',
+                  prefixIcon: const Icon(Icons.search),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
                   ),
+                  filled: true,
+                  fillColor: Colors.grey[100],
                 ),
+                onChanged: _filterButtons,
               ),
               const SizedBox(height: 20),
-              //Row Button
-              Center(
-                child: SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const RowView(),
-                        ),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue,
-                      foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(vertical: 14),
-                    ),
-                    child: const Text("Go to Row"),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 20),
-              //Stack Button
-              Center(
-                child: SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const StackView(),
-                        ),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue,
-                      foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(vertical: 14),
-                    ),
-                    child: const Text("Go to Stack"),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 20),
-              //ListView Button
-              Center(
-                child: SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const ListViewView(),
-                        ),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue,
-                      foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(vertical: 14),
-                    ),
-                    child: const Text("Go to ListView"),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 20),
-              //GridView Button
-              Center(
-                child: SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const GridViewView(),
-                        ),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue,
-                      foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(vertical: 14),
-                    ),
-                    child: const Text("Go to GridView"),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 20),
-              //SingleChildScrollView Button
-              Center(
-                child: SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder:
-                              (context) => const SingleChildScrollViewExample(),
-                        ),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue,
-                      foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(vertical: 14),
-                    ),
-                    child: const Text("Go to Single Child Scroll View"),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 20),
-              //Expanded Button
-              Center(
-                child: SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const ExpandedExample(),
-                        ),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue,
-                      foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(vertical: 14),
-                    ),
-                    child: const Text("Go to Expanded View"),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 20),
-              //Flexible Button
-              Center(
-                child: SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const FlexibleExample(),
-                        ),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue,
-                      foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(vertical: 14),
-                    ),
-                    child: const Text("Go to Flexible View"),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 20),
-              //Wrap Button
-              Center(
-                child: SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const WrapExample(),
-                        ),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue,
-                      foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(vertical: 14),
-                    ),
-                    child: const Text("Go to Wrap View"),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 20),
-              //Align Button
-              Center(
-                child: SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const AlignView(),
-                        ),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue,
-                      foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(vertical: 14),
-                    ),
-                    child: const Text("Go to Align View"),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 20),
-              //Center Button
-              Center(
-                child: SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const CenterView(),
-                        ),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue,
-                      foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(vertical: 14),
-                    ),
-                    child: const Text("Go to Center View"),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 20),
-              //SizedBox Button
-              Center(
-                child: SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const SizedBoxView(),
-                        ),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue,
-                      foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(vertical: 14),
-                    ),
-                    child: const Text("Go to SizedBox View"),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 20),
-              //Padding Button
-              Center(
-                child: SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const PaddingView(),
-                        ),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue,
-                      foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(vertical: 14),
-                    ),
-                    child: const Text("Go to Padding "),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 20),
-              //Margin Via Container Button
-              Center(
-                child: SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const MarginContainerView(),
-                        ),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue,
-                      foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(vertical: 14),
-                    ),
-                    child: const Text("Go to Margin Via Container "),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 20),
-              //Container Button
-              Center(
-                child: SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const ContainerView(),
-                        ),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue,
-                      foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(vertical: 14),
-                    ),
-                    child: const Text("Go to Container "),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 20),
-              //Card Button
-              Center(
-                child: SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const CardView(),
-                        ),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue,
-                      foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(vertical: 14),
-                    ),
-                    child: const Text("Go to Card "),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 20),
-              //Divider Button
-              Center(
-                child: SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const DividerView(),
-                        ),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue,
-                      foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(vertical: 14),
-                    ),
-                    child: const Text("Go to Divider "),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 20),
-              //Spacer Button
-              Center(
-                child: SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const SpacerView(),
-                        ),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue,
-                      foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(vertical: 14),
-                    ),
-                    child: const Text("Go to Spacer "),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 20),
-              //Aspect Ratio Button
-              Center(
-                child: SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const AspectRatioView(),
-                        ),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue,
-                      foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(vertical: 14),
-                    ),
-                    child: const Text("Go to Aspect Ratio "),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 20),
-              //Text Button
-              Center(
-                child: SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const TextView(),
-                        ),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue,
-                      foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(vertical: 14),
-                    ),
-                    child: const Text("Go to Text "),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 20),
-              //RichText Button
-              Center(
-                child: SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const RichTextView(),
-                        ),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue,
-                      foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(vertical: 14),
-                    ),
-                    child: const Text("Go to RichText "),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 20),
-              //SelectableText Button
-              Center(
-                child: SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const SelectableTextView(),
-                        ),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue,
-                      foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(vertical: 14),
-                    ),
-                    child: const Text("Go to Selectable Text "),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 20),
-              //Textfield Button
-              Center(
-                child: SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const TextFieldView(),
-                        ),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue,
-                      foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(vertical: 14),
-                    ),
-                    child: const Text("Go to TextField "),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 20),
-              //Image Button
-              Center(
-                child: SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const ImageView(),
-                        ),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue,
-                      foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(vertical: 14),
-                    ),
-                    child: const Text("Go to Image "),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 20),
-              //Icon Button
-              Center(
-                child: SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const IconView(),
-                        ),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue,
-                      foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(vertical: 14),
-                    ),
-                    child: const Text("Go to Icon"),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 20),
-              //CircleAvatar Button
-              Center(
-                child: SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const CircleAvatarView(),
-                        ),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue,
-                      foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(vertical: 14),
-                    ),
-                    child: const Text("Go to Circle Avatar"),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 20),
-              //ElevatedButton Button
-              Center(
-                child: SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const ElevatedButtonView(),
-                        ),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue,
-                      foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(vertical: 14),
-                    ),
-                    child: const Text("Go to Elevated Button"),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 20),
-              //TextButton Button
-              Center(
-                child: SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const TextButtonView(),
-                        ),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue,
-                      foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(vertical: 14),
-                    ),
-                    child: const Text("Go to Text Button"),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 20),
-              //Outlined Button
-              Center(
-                child: SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const OutlinedButtonView(),
-                        ),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue,
-                      foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(vertical: 14),
-                    ),
-                    child: const Text("Go to Outlined Button"),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 20),
-              //Floating Action Button
-              Center(
-                child: SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder:
-                              (context) => const FloatingActionButtonView(),
-                        ),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue,
-                      foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(vertical: 14),
-                    ),
-                    child: const Text("Go to Floating Action Button"),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 20),
-              //Icon Button
-              Center(
-                child: SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const IconButtonView(),
-                        ),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue,
-                      foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(vertical: 14),
-                    ),
-                    child: const Text("Go to Icon Button"),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 20),
-              //Popup Menu Button
-              Center(
-                child: SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const PopupMenuButtonView(),
-                        ),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue,
-                      foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(vertical: 14),
-                    ),
-                    child: const Text("Go to Popup Menu Button"),
-                  ),
-                ),
-              ),
+              ..._filteredButtons,
             ],
           ),
         ),
