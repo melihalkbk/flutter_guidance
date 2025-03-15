@@ -69,9 +69,9 @@
 ---
 
 #### **🔹 Animations**
-- [] **AnimatedContainer**  
-- [] **AnimatedOpacity**  
-- [] **AnimatedAlign**  
+- [X] **AnimatedContainer**  
+- [X] **AnimatedOpacity**  
+- [X] **AnimatedAlign**  
 - [] **AnimatedCrossFade**  
 - [] **AnimatedSwitcher**  
 - [] **Hero**  

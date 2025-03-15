@@ -50,6 +50,9 @@ import '../components/bottom_navigation_bar.dart';
 import '../components/tab_bar.dart';
 import '../components/drawer.dart';
 import '../components/app_bar.dart';
+import '../components/animated_container.dart';
+import '../components/animated_opacity.dart';
+import '../components/animated_align.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -130,6 +133,9 @@ class _HomePageState extends State<HomePage> {
       {"title": "Tab Bar", "page": const TabBarViewExample()},
       {"title": "Drawer", "page": const DrawerExample()},
       {"title": "App Bar", "page": const AppBarExample()},
+      {"title": "Animated Container", "page": const AnimatedContainerView()},
+      {"title": "Animated Opacity", "page": const AnimatedOpacityView()},
+      {"title": "Animated Align", "page": const AnimatedAlignView()},
     ];
   }
 
