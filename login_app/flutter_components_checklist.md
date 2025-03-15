@@ -93,9 +93,9 @@
 - [X] **AlertDialog**  
 - [X] **SnackBar**  
 - [X] **BottomSheet**  
-- [] **ModalBottomSheet**  
-- [] **SimpleDialog**  
-- [] **Toast (via third-party package)**  
+- [X] **ModalBottomSheet**  
+- [X] **SimpleDialog**  
+- [X] **Toast (via third-party package)**  
 
 ---
 
@@ -111,10 +111,10 @@
 ---
 
 #### **🔹 Data & API Integration**
-- [] **http (REST API requests)**  
-- [] **Dio**  
-- [] **WebSocket**  
-- [] **SharedPreferences**  
+- [X] **http (REST API requests)**  
+- [X] **Dio**  
+- [X] **WebSocket**  
+- [X] **SharedPreferences**  
 - [] **Hive**  
 - [] **Firebase Firestore**  
 - [] **SQLite**  

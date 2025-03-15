@@ -69,6 +69,10 @@ import '../components/bottom_sheet.dart';
 import '../components/modal_bottom_sheet.dart';
 import '../components/simple_dialog.dart';
 import '../components/toast.dart';
+import '../components/http.dart';
+import '../components/dio.dart';
+import '../components/web_socket.dart';
+import '../components/shared_preferences.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -168,6 +172,10 @@ class _HomePageState extends State<HomePage> {
       {"title": "Modal Bottom Sheet", "page": const ModalBottomSheetView()},
       {"title": "Simple Dialog", "page": const SimpleDialogView()},
       {"title": "Toast", "page": const ToastExampleView()},
+      {"title": "HTTP", "page": const HttpExampleView()},
+      {"title": "Dio", "page": const DioExampleView()},
+      {"title": "Web Socket", "page": const WebSocketExampleView()},
+      {"title": "Shared Preferences", "page": const SharedPreferencesExample()},
     ];
   }
 
