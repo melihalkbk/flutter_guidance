@@ -31,6 +31,9 @@ import '../components/icon.dart';
 import '../components/circle_avatar.dart';
 import '../components/text_button.dart';
 import '../components/outlined_button.dart';
+import '../components/floating_action_button.dart';
+import '../components/icon_button.dart';
+import '../components/popup_menu.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({super.key});
@@ -852,6 +855,76 @@ class HomePage extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(vertical: 14),
                     ),
                     child: const Text("Go to Outlined Button"),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20),
+              //Floating Action Button
+              Center(
+                child: SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder:
+                              (context) => const FloatingActionButtonView(),
+                        ),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blue,
+                      foregroundColor: Colors.white,
+                      padding: const EdgeInsets.symmetric(vertical: 14),
+                    ),
+                    child: const Text("Go to Floating Action Button"),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20),
+              //Icon Button
+              Center(
+                child: SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const IconButtonView(),
+                        ),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blue,
+                      foregroundColor: Colors.white,
+                      padding: const EdgeInsets.symmetric(vertical: 14),
+                    ),
+                    child: const Text("Go to Icon Button"),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20),
+              //Popup Menu Button
+              Center(
+                child: SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const PopupMenuButtonView(),
+                        ),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blue,
+                      foregroundColor: Colors.white,
+                      padding: const EdgeInsets.symmetric(vertical: 14),
+                    ),
+                    child: const Text("Go to Popup Menu Button"),
                   ),
                 ),
               ),
