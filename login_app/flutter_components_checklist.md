@@ -122,11 +122,11 @@
 ---
 
 #### **🔹 Shapes & Custom Painting**
-- [] **CustomPainter**  
-- [] **ClipRRect**  
-- [] **ClipOval**  
-- [] **ClipPath**  
-- [] **Transform**  
+- [X] **CustomPainter**  
+- [X] **ClipRRect**  
+- [X] **ClipOval**  
+- [X] **ClipPath**  
+- [X] **Transform**  
 
 ---
 

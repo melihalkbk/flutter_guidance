@@ -76,6 +76,8 @@ import '../components/shared_preferences.dart';
 import '../components/custom_painter.dart';
 import '../components/clip_rrect.dart';
 import '../components/clip_oval.dart';
+import '../components/clip_path.dart';
+import '../components/transform.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -182,6 +184,8 @@ class _HomePageState extends State<HomePage> {
       {"title": "Custom Painter", "page": const AnimatedPainterExample()},
       {"title": "Clip RRect", "page": const ClipRRectExample()},
       {"title": "Clip Oval", "page": const ClipOvalExample()},
+      {"title": "Clip Path", "page": const ClipPathExample()},
+      {"title": "Transform", "page": const TransformExample()},
     ];
   }
 

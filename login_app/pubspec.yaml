@@ -46,6 +46,7 @@ dependencies:
   hive: ^2.2.3
   hive_flutter: ^1.1.0
   cloud_firestore: ^4.15.5
+  video_player: ^2.8.2
 
 dev_dependencies:
   flutter_test:
