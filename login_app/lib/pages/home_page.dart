@@ -63,6 +63,9 @@ import '../components/gesture_detector.dart';
 import '../components/inkwell.dart';
 import '../components/dismissible.dart';
 import '../components/draggable.dart';
+import '../components/alert_dialog.dart';
+import '../components/snack_bar.dart';
+import '../components/bottom_sheet.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -156,6 +159,9 @@ class _HomePageState extends State<HomePage> {
       {"title": "Inkwell", "page": const InkWellView()},
       {"title": "Dismissible", "page": const DismissibleView()},
       {"title": "Draggable", "page": const DraggableView()},
+      {"title": "Alert Dialog", "page": const AlertDialogView()},
+      {"title": "Snack Bar", "page": const SnackBarView()},
+      {"title": "Bottom Sheet", "page": const BottomSheetView()},
     ];
   }
 

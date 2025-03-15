@@ -90,9 +90,9 @@
 ---
 
 #### **🔹 Alerts & Dialogs**
-- [] **AlertDialog**  
-- [] **SnackBar**  
-- [] **BottomSheet**  
+- [X] **AlertDialog**  
+- [X] **SnackBar**  
+- [X] **BottomSheet**  
 - [] **ModalBottomSheet**  
 - [] **SimpleDialog**  
 - [] **Toast (via third-party package)**  

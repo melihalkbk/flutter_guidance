@@ -26,8 +26,8 @@ class _DraggableViewState extends State<DraggableView> {
               ),
               const SizedBox(height: 8),
               const Text(
-                "Draggable widget, kullanıcıların belirli bir bileşeni sürükleyip bırakmasına olanak tanır. "
-                "Genellikle 'DragTarget' ile birlikte kullanılarak sürüklenen bileşenin nereye bırakılacağını belirler.",
+                "The Draggable widget allows users to drag and drop specific components. "
+                "It is typically used with 'DragTarget' to determine where the dragged component will be dropped.",
                 style: TextStyle(fontSize: 16),
               ),
               const SizedBox(height: 20),
@@ -147,7 +147,7 @@ class _DraggableViewState extends State<DraggableView> {
                         SizedBox(width: 6),
                         Expanded(
                           child: Text(
-                            "Kullanıcıların bileşenleri sürükleyip bırakmasını sağlar.",
+                            "Enables users to drag and drop components.",
                           ),
                         ),
                       ],
@@ -159,7 +159,7 @@ class _DraggableViewState extends State<DraggableView> {
                         SizedBox(width: 6),
                         Expanded(
                           child: Text(
-                            "DragTarget ile birlikte kullanılarak hedef alan belirlenebilir.",
+                            "Can be used with DragTarget to specify the target area.",
                           ),
                         ),
                       ],
@@ -171,7 +171,7 @@ class _DraggableViewState extends State<DraggableView> {
                         SizedBox(width: 6),
                         Expanded(
                           child: Text(
-                            "Sürükleme esnasında 'feedback' ile farklı bir görünüm gösterilebilir.",
+                            "Different appearance can be shown during dragging using 'feedback'.",
                           ),
                         ),
                       ],
@@ -200,6 +200,7 @@ class _DraggableViewState extends State<DraggableView> {
                   ),
                 ),
               ),
+              const SizedBox(height: 20),
             ],
           ),
         ),
