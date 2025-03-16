@@ -215,8 +215,8 @@ class _HomePageState extends State<HomePage> {
 
     return Scaffold(
       appBar: AppBar(
-        elevation: 0, // Remove shadow
-        backgroundColor: Colors.blue.shade50, // Match with background
+        elevation: 0,
+        backgroundColor: Colors.blue.shade50,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -225,11 +225,10 @@ class _HomePageState extends State<HomePage> {
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
-                color: Colors.blue, // Match app theme
+                color: Colors.blue,
               ),
             ),
             ElevatedButton.icon(
-              // Added icon to logout button
               onPressed: () async {
                 await _authService.signOut();
                 Navigator.pushReplacementNamed(context, "/login");
@@ -320,6 +319,164 @@ class _HomePageState extends State<HomePage> {
                 ),
                 const SizedBox(height: 24),
 
+                // About Section Enhancement
+                Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.all(20),
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      colors: [Colors.blue.shade50, Colors.white],
+                    ),
+                    borderRadius: BorderRadius.circular(16),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.blue.withOpacity(0.1),
+                        spreadRadius: 5,
+                        blurRadius: 10,
+                        offset: const Offset(0, 3),
+                      ),
+                    ],
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        "📱 Welcome to Flutter Guidance",
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.blue,
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+                      const Text(
+                        "Your ultimate companion for mastering Flutter UI development! This comprehensive guide brings you a carefully curated collection of Flutter widgets and their practical implementations.",
+                        style: TextStyle(fontSize: 16, height: 1.5),
+                      ),
+                      const SizedBox(height: 20),
+                      const Text(
+                        "🎯 Why This App?",
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.blue,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      const Text(
+                        "Whether you're a beginner starting your Flutter journey or an experienced developer looking for quick references, this app is designed to accelerate your learning process with hands-on examples and clear explanations.",
+                        style: TextStyle(fontSize: 16, height: 1.5),
+                      ),
+                      const SizedBox(height: 20),
+                      const Text(
+                        "🚀 Key Features:",
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.blue,
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+                      _buildFeatureRow(
+                        icon: Icons.widgets,
+                        text:
+                            "Extensive collection of 50+ Flutter widgets with practical examples",
+                      ),
+                      _buildFeatureRow(
+                        icon: Icons.code,
+                        text:
+                            "Clear, copy-paste ready code samples for quick implementation",
+                      ),
+                      _buildFeatureRow(
+                        icon: Icons.touch_app,
+                        text: "Interactive examples to see widgets in action",
+                      ),
+                      _buildFeatureRow(
+                        icon: Icons.search,
+                        text:
+                            "Quick search functionality to find specific widgets",
+                      ),
+                      _buildFeatureRow(
+                        icon: Icons.auto_awesome,
+                        text: "Best practices and real-world usage scenarios",
+                      ),
+                      _buildFeatureRow(
+                        icon: Icons.update,
+                        text: "Regular updates with new widgets and features",
+                      ),
+                      const SizedBox(height: 20),
+                      const Text(
+                        "💡 Pro Tips:",
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.blue,
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+                      Container(
+                        padding: const EdgeInsets.all(12),
+                        decoration: BoxDecoration(
+                          color: Colors.blue.withOpacity(0.1),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: const Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "• Experiment with the interactive examples",
+                              style: TextStyle(fontSize: 16),
+                            ),
+                            SizedBox(height: 4),
+                            Text(
+                              "• Study the source code for implementation details",
+                              style: TextStyle(fontSize: 16),
+                            ),
+                            SizedBox(height: 4),
+                            Text(
+                              "• Combine multiple widgets to create complex UIs",
+                              style: TextStyle(fontSize: 16),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 24),
+                      Center(
+                        child: ElevatedButton.icon(
+                          onPressed: () {
+                            final Uri githubUrl = Uri.parse(
+                              "https://github.com/melihalkbk/login-app",
+                            );
+                            launchUrl(githubUrl);
+                          },
+                          icon: const Icon(Icons.code, color: Colors.white),
+                          label: const Text(
+                            "Explore Source Code",
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.black87,
+                            foregroundColor: Colors.white,
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 16,
+                              horizontal: 24,
+                            ),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 24),
+
                 // Search Bar Enhancement
                 Container(
                   decoration: BoxDecoration(
@@ -353,127 +510,7 @@ class _HomePageState extends State<HomePage> {
                     onChanged: _filterButtons,
                   ),
                 ),
-                const SizedBox(height: 24),
-
-                // About Section Enhancement
-                Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.all(20),
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      colors: [Colors.blue.shade50, Colors.white],
-                    ),
-                    borderRadius: BorderRadius.circular(16),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.blue.withOpacity(0.1),
-                        spreadRadius: 5,
-                        blurRadius: 10,
-                        offset: const Offset(0, 3),
-                      ),
-                    ],
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        "📌 About This App",
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                      const Text(
-                        "This app is designed to help Flutter developers understand various UI components. "
-                        "Each widget is explained with examples, making it easy to learn and implement in real projects.",
-                        style: TextStyle(fontSize: 16),
-                      ),
-                      const SizedBox(height: 10),
-                      const Text(
-                        "🚀 Features:",
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(height: 6),
-                      Row(
-                        children: const [
-                          Icon(
-                            Icons.check_circle,
-                            color: Colors.green,
-                            size: 18,
-                          ),
-                          SizedBox(width: 6),
-                          Expanded(
-                            child: Text(
-                              "Learn 50+ Flutter widgets with examples.",
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 6),
-                      Row(
-                        children: const [
-                          Icon(
-                            Icons.check_circle,
-                            color: Colors.green,
-                            size: 18,
-                          ),
-                          SizedBox(width: 6),
-                          Expanded(
-                            child: Text(
-                              "Each widget has a detailed explanation and sample usage.",
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 6),
-                      Row(
-                        children: const [
-                          Icon(
-                            Icons.check_circle,
-                            color: Colors.green,
-                            size: 18,
-                          ),
-                          SizedBox(width: 6),
-                          Expanded(
-                            child: Text(
-                              "Easy navigation between widget examples.",
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 10),
-
-                      // GitHub Repository Button
-                      Center(
-                        child: ElevatedButton.icon(
-                          onPressed: () {
-                            final Uri githubUrl = Uri.parse(
-                              "https://github.com/melihalkbk/login-app",
-                            );
-                            launchUrl(githubUrl);
-                          },
-                          icon: const Icon(Icons.code, color: Colors.white),
-                          label: const Text("View Source Code"),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.black,
-                            foregroundColor: Colors.white,
-                            padding: const EdgeInsets.symmetric(
-                              vertical: 12,
-                              horizontal: 20,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 24),
+                const SizedBox(height: 16),
 
                 // Buttons Grid Enhancement
                 GridView.builder(
@@ -516,7 +553,6 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  // Update the _buildButton method
   Widget _buildButton(Map<String, dynamic> widget) {
     return ElevatedButton(
       onPressed: () {
@@ -535,6 +571,26 @@ class _HomePageState extends State<HomePage> {
         widget["title"],
         textAlign: TextAlign.center,
         style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+      ),
+    );
+  }
+
+  Widget _buildFeatureRow({required IconData icon, required String text}) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8),
+      child: Row(
+        children: [
+          Container(
+            padding: const EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              color: Colors.blue.withOpacity(0.1),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Icon(icon, color: Colors.blue, size: 20),
+          ),
+          const SizedBox(width: 12),
+          Expanded(child: Text(text, style: const TextStyle(fontSize: 16))),
+        ],
       ),
     );
   }
