@@ -249,7 +249,7 @@ class _HomePageState extends State<HomePage> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Text("Flutter Widgets App"),
+            const Text("Flutter Guidance App"),
             ElevatedButton(
               onPressed: () async {
                 await _authService.signOut();
