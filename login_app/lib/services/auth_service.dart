@@ -60,24 +60,6 @@ class AuthService {
     }
   }
 
-  // Sign in with Facebook
-  Future<UserCredential?> signInWithFacebook() async {
-    try {
-      final LoginResult result = await FacebookAuth.instance.login();
-
-      if (result.status == LoginStatus.success) {
-        final OAuthCredential credential = FacebookAuthProvider.credential(
-          result.accessToken!.tokenString,
-        );
-        return await _auth.signInWithCredential(credential);
-      }
-      return null;
-    } catch (e) {
-      print("Facebook Sign-In Error: $e");
-      return null;
-    }
-  }
-
   // Sign in as Guest
   Future<UserCredential?> signInAsGuest({
     required String name,
@@ -126,4 +108,13 @@ class AuthService {
 
   // Listen to auth state changes
   Stream<User?> get authStateChanges => _auth.authStateChanges();
+
+  // Send password reset email
+  Future<void> sendPasswordResetEmail(String email) async {
+    try {
+      await _auth.sendPasswordResetEmail(email: email);
+    } catch (e) {
+      throw Exception('Failed to send password reset email: $e');
+    }
+  }
 }

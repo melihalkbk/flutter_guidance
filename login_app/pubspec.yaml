@@ -38,14 +38,12 @@ dependencies:
   firebase_core: ^3.12.1
   firebase_auth: ^5.5.1
   google_sign_in: ^6.3.0
-  flutter_facebook_auth: ^7.1.1
   fluttertoast: ^8.2.2
   dio: ^5.4.0
   web_socket_channel: ^2.4.0 
   shared_preferences: ^2.2.2
   hive: ^2.2.3
   hive_flutter: ^1.1.0
-  cloud_firestore: ^5.6.5
   video_player: ^2.8.2
 
 dev_dependencies:
