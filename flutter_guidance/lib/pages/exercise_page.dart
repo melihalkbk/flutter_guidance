@@ -6,6 +6,7 @@ import '../data/easy_questions_3.dart';
 import '../data/easy_questions_4.dart';
 import '../data/medium_questions.dart';
 import '../data/medium_questions_2.dart';
+import '../data/medium_questions_3.dart';
 import 'quiz_page.dart';
 
 class ExercisePage extends StatelessWidget {
@@ -27,11 +28,6 @@ class ExercisePage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: 32),
-            const Text(
-              'Flutter Component Exercises',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 16),
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
@@ -105,6 +101,8 @@ class ExercisePage extends StatelessWidget {
                       ),
                     ],
                   ),
+                  const SizedBox(height: 16),
+                  _buildQuizButton(context, mediumQuestions3, 'Medium Quiz 3'),
                 ],
               ),
             ),
