@@ -137,7 +137,14 @@ class _LoginPageState extends State<LoginPage>
           duration: Duration(seconds: 2),
         ),
       );
-      _navigateToHome();
+      Navigator.pushReplacementNamed(
+        context,
+        '/home',
+        arguments: {
+          'firstName': _nameController.text,
+          'lastName': _surnameController.text,
+        },
+      );
     } else {
       _showErrorMessage("❌ Guest login failed.");
     }

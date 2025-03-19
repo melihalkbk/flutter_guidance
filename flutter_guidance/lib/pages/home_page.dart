@@ -214,7 +214,11 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final user = FirebaseAuth.instance.currentUser;
-    final String userEmail = user?.email ?? "Guest";
+    final Map<String, dynamic>? args =
+        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+    final String displayName =
+        user?.email ??
+        "${args?['firstName'] ?? 'Guest'} ${args?['lastName'] ?? ''}";
 
     return Scaffold(
       appBar: AppBar(
@@ -314,7 +318,7 @@ class _HomePageState extends State<HomePage> {
                                     width:
                                         MediaQuery.of(context).size.width * 0.5,
                                     child: Text(
-                                      userEmail,
+                                      displayName,
                                       style: const TextStyle(
                                         fontSize: 24,
                                         fontWeight: FontWeight.bold,
