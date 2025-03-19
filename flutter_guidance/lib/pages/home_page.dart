@@ -78,6 +78,7 @@ import '../components/clip_rrect.dart';
 import '../components/clip_oval.dart';
 import '../components/clip_path.dart';
 import '../components/transform.dart';
+import 'profile_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -91,6 +92,7 @@ class _HomePageState extends State<HomePage> {
   final TextEditingController _searchController = TextEditingController();
   List<Map<String, dynamic>> widgetList = [];
   List<Widget> _filteredButtons = [];
+  int _selectedIndex = 0;
 
   @override
   void initState() {
@@ -211,7 +213,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final user = FirebaseAuth.instance.currentUser;
-    final String displayName = user?.displayName ?? "Guest";
+    final String userEmail = user?.email ?? "Guest";
 
     return Scaffold(
       appBar: AppBar(
@@ -250,305 +252,333 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [Colors.blue.shade50, Colors.white],
-          ),
-        ),
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // User Profile Section
-                Container(
-                  padding: const EdgeInsets.all(20),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(16),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.blue.withOpacity(0.1),
-                        spreadRadius: 5,
-                        blurRadius: 10,
-                        offset: const Offset(0, 3),
-                      ),
-                    ],
-                  ),
-                  child: Row(
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.all(8),
-                        decoration: BoxDecoration(
-                          color: Colors.blue.shade50,
-                          shape: BoxShape.circle,
-                        ),
-                        child: const Icon(
-                          Icons.account_circle,
-                          size: 60,
-                          color: Colors.blue,
-                        ),
-                      ),
-                      const SizedBox(width: 16),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Welcome,",
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.grey.shade600,
-                            ),
-                          ),
-                          Text(
-                            displayName,
-                            style: const TextStyle(
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.blue,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
+      body:
+          _selectedIndex == 0
+              ? Container(
+                // Mevcut home içeriği
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [Colors.blue.shade50, Colors.white],
                   ),
                 ),
-                const SizedBox(height: 24),
+                child: SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // User Profile Section
+                        Container(
+                          padding: const EdgeInsets.all(20),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(16),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.blue.withOpacity(0.1),
+                                spreadRadius: 5,
+                                blurRadius: 10,
+                                offset: const Offset(0, 3),
+                              ),
+                            ],
+                          ),
+                          child: Row(
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.all(8),
+                                decoration: BoxDecoration(
+                                  color: Colors.blue.shade50,
+                                  shape: BoxShape.circle,
+                                ),
+                                child: const Icon(
+                                  Icons.account_circle,
+                                  size: 60,
+                                  color: Colors.blue,
+                                ),
+                              ),
+                              const SizedBox(width: 16),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Welcome,",
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      color: Colors.grey.shade600,
+                                    ),
+                                  ),
+                                  Text(
+                                    userEmail,
+                                    style: const TextStyle(
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.blue,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(height: 24),
 
-                // About Section Enhancement
-                Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.all(20),
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      colors: [Colors.blue.shade50, Colors.white],
-                    ),
-                    borderRadius: BorderRadius.circular(16),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.blue.withOpacity(0.1),
-                        spreadRadius: 5,
-                        blurRadius: 10,
-                        offset: const Offset(0, 3),
-                      ),
-                    ],
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        "📱 Welcome to Flutter Guidance",
-                        style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.blue,
-                        ),
-                      ),
-                      const SizedBox(height: 12),
-                      const Text(
-                        "Your ultimate companion for mastering Flutter UI development! This comprehensive guide brings you a carefully curated collection of Flutter widgets and their practical implementations.",
-                        style: TextStyle(fontSize: 16, height: 1.5),
-                      ),
-                      const SizedBox(height: 20),
-                      const Text(
-                        "🎯 Why This App?",
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.blue,
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                      const Text(
-                        "Whether you're a beginner starting your Flutter journey or an experienced developer looking for quick references, this app is designed to accelerate your learning process with hands-on examples and clear explanations.",
-                        style: TextStyle(fontSize: 16, height: 1.5),
-                      ),
-                      const SizedBox(height: 20),
-                      const Text(
-                        "🚀 Key Features:",
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.blue,
-                        ),
-                      ),
-                      const SizedBox(height: 12),
-                      _buildFeatureRow(
-                        icon: Icons.widgets,
-                        text:
-                            "Extensive collection of 50+ Flutter widgets with practical examples",
-                      ),
-                      _buildFeatureRow(
-                        icon: Icons.code,
-                        text:
-                            "Clear, copy-paste ready code samples for quick implementation",
-                      ),
-                      _buildFeatureRow(
-                        icon: Icons.touch_app,
-                        text: "Interactive examples to see widgets in action",
-                      ),
-                      _buildFeatureRow(
-                        icon: Icons.search,
-                        text:
-                            "Quick search functionality to find specific widgets",
-                      ),
-                      _buildFeatureRow(
-                        icon: Icons.auto_awesome,
-                        text: "Best practices and real-world usage scenarios",
-                      ),
-                      _buildFeatureRow(
-                        icon: Icons.update,
-                        text: "Regular updates with new widgets and features",
-                      ),
-                      const SizedBox(height: 20),
-                      const Text(
-                        "💡 Pro Tips:",
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.blue,
-                        ),
-                      ),
-                      const SizedBox(height: 12),
-                      Container(
-                        padding: const EdgeInsets.all(12),
-                        decoration: BoxDecoration(
-                          color: Colors.blue.withOpacity(0.1),
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: const Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "• Experiment with the interactive examples",
-                              style: TextStyle(fontSize: 16),
+                        // About Section Enhancement
+                        Container(
+                          width: double.infinity,
+                          padding: const EdgeInsets.all(20),
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                              colors: [Colors.blue.shade50, Colors.white],
                             ),
-                            SizedBox(height: 4),
-                            Text(
-                              "• Study the source code for implementation details",
-                              style: TextStyle(fontSize: 16),
-                            ),
-                            SizedBox(height: 4),
-                            Text(
-                              "• Combine multiple widgets to create complex UIs",
-                              style: TextStyle(fontSize: 16),
-                            ),
-                          ],
+                            borderRadius: BorderRadius.circular(16),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.blue.withOpacity(0.1),
+                                spreadRadius: 5,
+                                blurRadius: 10,
+                                offset: const Offset(0, 3),
+                              ),
+                            ],
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text(
+                                "📱 Welcome to Flutter Guidance",
+                                style: TextStyle(
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.blue,
+                                ),
+                              ),
+                              const SizedBox(height: 12),
+                              const Text(
+                                "Your ultimate companion for mastering Flutter UI development! This comprehensive guide brings you a carefully curated collection of Flutter widgets and their practical implementations.",
+                                style: TextStyle(fontSize: 16, height: 1.5),
+                              ),
+                              const SizedBox(height: 20),
+                              const Text(
+                                "🎯 Why This App?",
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.blue,
+                                ),
+                              ),
+                              const SizedBox(height: 8),
+                              const Text(
+                                "Whether you're a beginner starting your Flutter journey or an experienced developer looking for quick references, this app is designed to accelerate your learning process with hands-on examples and clear explanations.",
+                                style: TextStyle(fontSize: 16, height: 1.5),
+                              ),
+                              const SizedBox(height: 20),
+                              const Text(
+                                "🚀 Key Features:",
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.blue,
+                                ),
+                              ),
+                              const SizedBox(height: 12),
+                              _buildFeatureRow(
+                                icon: Icons.widgets,
+                                text:
+                                    "Extensive collection of 50+ Flutter widgets with practical examples",
+                              ),
+                              _buildFeatureRow(
+                                icon: Icons.code,
+                                text:
+                                    "Clear, copy-paste ready code samples for quick implementation",
+                              ),
+                              _buildFeatureRow(
+                                icon: Icons.touch_app,
+                                text:
+                                    "Interactive examples to see widgets in action",
+                              ),
+                              _buildFeatureRow(
+                                icon: Icons.search,
+                                text:
+                                    "Quick search functionality to find specific widgets",
+                              ),
+                              _buildFeatureRow(
+                                icon: Icons.auto_awesome,
+                                text:
+                                    "Best practices and real-world usage scenarios",
+                              ),
+                              _buildFeatureRow(
+                                icon: Icons.update,
+                                text:
+                                    "Regular updates with new widgets and features",
+                              ),
+                              const SizedBox(height: 20),
+                              const Text(
+                                "💡 Pro Tips:",
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.blue,
+                                ),
+                              ),
+                              const SizedBox(height: 12),
+                              Container(
+                                padding: const EdgeInsets.all(12),
+                                decoration: BoxDecoration(
+                                  color: Colors.blue.withOpacity(0.1),
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                child: const Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "• Experiment with the interactive examples",
+                                      style: TextStyle(fontSize: 16),
+                                    ),
+                                    SizedBox(height: 4),
+                                    Text(
+                                      "• Study the source code for implementation details",
+                                      style: TextStyle(fontSize: 16),
+                                    ),
+                                    SizedBox(height: 4),
+                                    Text(
+                                      "• Combine multiple widgets to create complex UIs",
+                                      style: TextStyle(fontSize: 16),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(height: 24),
+                              Center(
+                                child: ElevatedButton.icon(
+                                  onPressed: () {
+                                    final Uri githubUrl = Uri.parse(
+                                      "https://github.com/melihalkbk/login-app",
+                                    );
+                                    launchUrl(githubUrl);
+                                  },
+                                  icon: const Icon(
+                                    Icons.code,
+                                    color: Colors.white,
+                                  ),
+                                  label: const Text(
+                                    "Explore Source Code",
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.black87,
+                                    foregroundColor: Colors.white,
+                                    padding: const EdgeInsets.symmetric(
+                                      vertical: 16,
+                                      horizontal: 24,
+                                    ),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: 24),
-                      Center(
-                        child: ElevatedButton.icon(
-                          onPressed: () {
-                            final Uri githubUrl = Uri.parse(
-                              "https://github.com/melihalkbk/login-app",
+                        const SizedBox(height: 24),
+
+                        // Search Bar Enhancement
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(12),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.1),
+                                spreadRadius: 2,
+                                blurRadius: 8,
+                                offset: const Offset(0, 2),
+                              ),
+                            ],
+                          ),
+                          child: TextField(
+                            controller: _searchController,
+                            decoration: InputDecoration(
+                              hintText: 'Search widgets...',
+                              hintStyle: TextStyle(color: Colors.grey.shade400),
+                              prefixIcon: Icon(
+                                Icons.search,
+                                color: Colors.grey.shade400,
+                              ),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(12),
+                                borderSide: BorderSide.none,
+                              ),
+                              filled: true,
+                              fillColor: Colors.white,
+                            ),
+                            onChanged: _filterButtons,
+                          ),
+                        ),
+                        const SizedBox(height: 16),
+
+                        // Buttons Grid Enhancement
+                        GridView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2,
+                                crossAxisSpacing: 16,
+                                mainAxisSpacing: 16,
+                                childAspectRatio: 2.5,
+                              ),
+                          itemCount: _filteredButtons.length,
+                          itemBuilder: (context, index) {
+                            return Container(
+                              decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                  colors: [
+                                    Colors.blue.shade400,
+                                    Colors.blue.shade600,
+                                  ],
+                                ),
+                                borderRadius: BorderRadius.circular(12),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.blue.withOpacity(0.2),
+                                    spreadRadius: 1,
+                                    blurRadius: 4,
+                                    offset: const Offset(0, 2),
+                                  ),
+                                ],
+                              ),
+                              child: _filteredButtons[index],
                             );
-                            launchUrl(githubUrl);
                           },
-                          icon: const Icon(Icons.code, color: Colors.white),
-                          label: const Text(
-                            "Explore Source Code",
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.black87,
-                            foregroundColor: Colors.white,
-                            padding: const EdgeInsets.symmetric(
-                              vertical: 16,
-                              horizontal: 24,
-                            ),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 24),
-
-                // Search Bar Enhancement
-                Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(12),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.1),
-                        spreadRadius: 2,
-                        blurRadius: 8,
-                        offset: const Offset(0, 2),
-                      ),
-                    ],
-                  ),
-                  child: TextField(
-                    controller: _searchController,
-                    decoration: InputDecoration(
-                      hintText: 'Search widgets...',
-                      hintStyle: TextStyle(color: Colors.grey.shade400),
-                      prefixIcon: Icon(
-                        Icons.search,
-                        color: Colors.grey.shade400,
-                      ),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: BorderSide.none,
-                      ),
-                      filled: true,
-                      fillColor: Colors.white,
+                      ],
                     ),
-                    onChanged: _filterButtons,
                   ),
                 ),
-                const SizedBox(height: 16),
-
-                // Buttons Grid Enhancement
-                GridView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 16,
-                    mainAxisSpacing: 16,
-                    childAspectRatio: 2.5,
-                  ),
-                  itemCount: _filteredButtons.length,
-                  itemBuilder: (context, index) {
-                    return Container(
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                          colors: [Colors.blue.shade400, Colors.blue.shade600],
-                        ),
-                        borderRadius: BorderRadius.circular(12),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.blue.withOpacity(0.2),
-                            spreadRadius: 1,
-                            blurRadius: 4,
-                            offset: const Offset(0, 2),
-                          ),
-                        ],
-                      ),
-                      child: _filteredButtons[index],
-                    );
-                  },
-                ),
-              ],
-            ),
-          ),
-        ),
+              )
+              : const ProfilePage(), // Profil sayfasını burada kullanıyoruz
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _selectedIndex,
+        onTap: (index) {
+          setState(() {
+            _selectedIndex = index;
+          });
+        },
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
+        ],
+        selectedItemColor: Colors.blue,
+        unselectedItemColor: Colors.grey,
       ),
     );
   }
