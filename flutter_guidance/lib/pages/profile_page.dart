@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../widgets/change_password_widget.dart';
+import '../widgets/delete_account_widget.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
@@ -72,6 +73,8 @@ class ProfilePage extends StatelessWidget {
               ),
               const SizedBox(height: 24),
               const ChangePasswordWidget(),
+              const SizedBox(height: 24),
+              const DeleteAccountWidget(),
             ],
           ),
         ),
