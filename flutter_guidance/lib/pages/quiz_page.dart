@@ -21,6 +21,36 @@ class _QuizPageState extends State<QuizPage> {
   bool _hasAnswered = false;
   int? _selectedAnswerIndex;
 
+  Color _getOptionBackgroundColor(int optionIndex) {
+    if (!_hasAnswered) return Colors.white;
+
+    if (optionIndex ==
+        widget.questions[_currentQuestionIndex].correctAnswerIndex) {
+      return Colors.green.shade50;
+    }
+
+    if (optionIndex == _selectedAnswerIndex) {
+      return Colors.red.shade50;
+    }
+
+    return Colors.white;
+  }
+
+  Color _getOptionBorderColor(int optionIndex) {
+    if (!_hasAnswered) return Colors.blue.withOpacity(0.5);
+
+    if (optionIndex ==
+        widget.questions[_currentQuestionIndex].correctAnswerIndex) {
+      return Colors.green;
+    }
+
+    if (optionIndex == _selectedAnswerIndex) {
+      return Colors.red;
+    }
+
+    return Colors.blue.withOpacity(0.5);
+  }
+
   void _checkAnswer(int selectedIndex) {
     if (_hasAnswered) return;
 
@@ -90,17 +120,35 @@ class _QuizPageState extends State<QuizPage> {
                   padding: const EdgeInsets.only(bottom: 12),
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: _getButtonColor(index),
+                      backgroundColor: _getOptionBackgroundColor(index),
                       padding: const EdgeInsets.all(16),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
+                        side: BorderSide(
+                          color: _getOptionBorderColor(index),
+                          width: 2,
+                        ),
                       ),
+                      elevation: 0,
                     ),
                     onPressed: _hasAnswered ? null : () => _checkAnswer(index),
-                    child: Text(
-                      question.options[index],
-                      style: TextStyle(
-                        color: _hasAnswered ? Colors.white : Colors.blue,
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        question.options[index],
+                        style: TextStyle(
+                          color:
+                              _hasAnswered
+                                  ? _getOptionBorderColor(index)
+                                  : Colors.blue,
+                          fontSize: 16,
+                          fontWeight:
+                              _hasAnswered &&
+                                      (index == _selectedAnswerIndex ||
+                                          index == question.correctAnswerIndex)
+                                  ? FontWeight.bold
+                                  : FontWeight.normal,
+                        ),
                       ),
                     ),
                   ),

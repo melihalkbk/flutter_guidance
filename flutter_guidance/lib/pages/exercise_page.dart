@@ -4,6 +4,8 @@ import '../data/easy_questions.dart';
 import '../data/easy_questions_2.dart';
 import '../data/easy_questions_3.dart';
 import '../data/easy_questions_4.dart';
+import '../data/medium_questions.dart';
+import '../data/medium_questions_2.dart';
 import 'quiz_page.dart';
 
 class ExercisePage extends StatelessWidget {
@@ -85,6 +87,24 @@ class ExercisePage extends StatelessWidget {
                       _buildQuizButton(context, easyQuestions4, 'Easy Quiz 4'),
                     ],
                   ),
+                  const SizedBox(height: 24),
+                  const Divider(),
+                  const SizedBox(height: 24),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      _buildQuizButton(
+                        context,
+                        mediumQuestions,
+                        'Medium Quiz 1',
+                      ),
+                      _buildQuizButton(
+                        context,
+                        mediumQuestions2,
+                        'Medium Quiz 2',
+                      ),
+                    ],
+                  ),
                 ],
               ),
             ),
@@ -99,24 +119,33 @@ class ExercisePage extends StatelessWidget {
     List<QuizQuestion> questions,
     String title,
   ) {
-    return ElevatedButton(
-      onPressed: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder:
-                (context) => QuizPage(questions: questions, difficulty: title),
+    return SizedBox(
+      width: MediaQuery.of(context).size.width * 0.45,
+      child: ElevatedButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder:
+                  (context) =>
+                      QuizPage(questions: questions, difficulty: title),
+            ),
+          );
+        },
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Colors.blue,
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
           ),
-        );
-      },
-      style: ElevatedButton.styleFrom(
-        backgroundColor: Colors.blue,
-        padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      ),
-      child: Text(
-        'Start $title',
-        style: const TextStyle(color: Colors.white, fontSize: 16),
+        ),
+        child: Text(
+          title, // Removed 'Start' prefix
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 14, // Reduced from 16 to 14
+          ),
+        ),
       ),
     );
   }
