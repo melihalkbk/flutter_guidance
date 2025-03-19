@@ -79,6 +79,7 @@ import '../components/clip_oval.dart';
 import '../components/clip_path.dart';
 import '../components/transform.dart';
 import 'profile_page.dart';
+import 'exercise_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -571,7 +572,9 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
               )
-              : const ProfilePage(), // Profil sayfasını burada kullanıyoruz
+              : _selectedIndex == 1
+              ? const ExercisePage()
+              : const ProfilePage(),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
         onTap: (index) {
@@ -581,6 +584,7 @@ class _HomePageState extends State<HomePage> {
         },
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+          BottomNavigationBarItem(icon: Icon(Icons.book), label: 'Exercise'),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
         ],
         selectedItemColor: Colors.blue,
