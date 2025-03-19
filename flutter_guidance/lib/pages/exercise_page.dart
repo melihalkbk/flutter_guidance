@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import '../models/quiz_question.dart';
 import '../data/easy_questions.dart';
+import '../data/easy_questions_2.dart';
+import '../data/easy_questions_3.dart';
+import '../data/easy_questions_4.dart';
 import 'quiz_page.dart';
 
 class ExercisePage extends StatelessWidget {
@@ -62,39 +66,57 @@ class ExercisePage extends StatelessWidget {
                 ],
               ),
             ),
-            const SizedBox(height: 16), // "Coming Soon" ve Buton Arası Boşluk
+            const SizedBox(height: 16),
             Center(
-              child: ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder:
-                          (context) => QuizPage(
-                            questions: easyQuestions,
-                            difficulty: 'Easy',
-                          ),
-                    ),
-                  );
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blue,
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 32,
-                    vertical: 16,
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      _buildQuizButton(context, easyQuestions, 'Easy Quiz 1'),
+                      _buildQuizButton(context, easyQuestions2, 'Easy Quiz 2'),
+                    ],
                   ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
+                  const SizedBox(height: 16),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      _buildQuizButton(context, easyQuestions3, 'Easy Quiz 3'),
+                      _buildQuizButton(context, easyQuestions4, 'Easy Quiz 4'),
+                    ],
                   ),
-                ),
-                child: const Text(
-                  'Start Easy Quiz',
-                  style: TextStyle(color: Colors.white, fontSize: 16),
-                ),
+                ],
               ),
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildQuizButton(
+    BuildContext context,
+    List<QuizQuestion> questions,
+    String title,
+  ) {
+    return ElevatedButton(
+      onPressed: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder:
+                (context) => QuizPage(questions: questions, difficulty: title),
+          ),
+        );
+      },
+      style: ElevatedButton.styleFrom(
+        backgroundColor: Colors.blue,
+        padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      ),
+      child: Text(
+        'Start $title',
+        style: const TextStyle(color: Colors.white, fontSize: 16),
       ),
     );
   }
