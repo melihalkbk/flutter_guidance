@@ -8,6 +8,8 @@ import '../data/medium_questions.dart';
 import '../data/medium_questions_2.dart';
 import '../data/medium_questions_3.dart';
 import '../data/medium_questions_4.dart';
+import '../data/hard_questions.dart';
+import '../data/hard_questions_2.dart';
 import 'quiz_page.dart';
 
 class ExercisePage extends StatelessWidget {
@@ -161,6 +163,26 @@ class ExercisePage extends StatelessWidget {
                             mediumQuestions4,
                             'Advanced Quiz 4',
                             'Advanced Components',
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 24),
+                      _buildCategorySection(
+                        'Expert Level',
+                        'Push your limits',
+                        Colors.red,
+                        [
+                          _buildQuizCard(
+                            context,
+                            hardQuestions,
+                            'Expert Quiz 1',
+                            'Advanced Concepts & Best Practices',
+                          ),
+                          _buildQuizCard(
+                            context,
+                            hardQuestions2,
+                            'Expert Quiz 2',
+                            'Performance & Custom Implementations',
                           ),
                         ],
                       ),
