@@ -10,6 +10,8 @@ import '../data/medium_questions_3.dart';
 import '../data/medium_questions_4.dart';
 import '../data/hard_questions.dart';
 import '../data/hard_questions_2.dart';
+import '../data/hard_questions_3.dart';
+import '../data/hard_questions_4.dart';
 import 'quiz_page.dart';
 
 class ExercisePage extends StatelessWidget {
@@ -183,6 +185,18 @@ class ExercisePage extends StatelessWidget {
                             hardQuestions2,
                             'Expert Quiz 2',
                             'Performance & Custom Implementations',
+                          ),
+                          _buildQuizCard(
+                            context,
+                            hardQuestions3,
+                            'Expert Quiz 3',
+                            'Platform Integration & Advanced UI',
+                          ),
+                          _buildQuizCard(
+                            context,
+                            hardQuestions4,
+                            'Expert Quiz 4',
+                            'Custom Rendering & Optimization',
                           ),
                         ],
                       ),
