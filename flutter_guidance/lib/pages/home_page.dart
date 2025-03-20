@@ -260,7 +260,6 @@ class _HomePageState extends State<HomePage> {
       body:
           _selectedIndex == 0
               ? Container(
-                // Mevcut home içeriği
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     begin: Alignment.topCenter,
