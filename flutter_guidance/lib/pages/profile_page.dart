@@ -17,7 +17,8 @@ class ProfilePage extends StatelessWidget {
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [Colors.blue.shade50, Colors.white],
+            colors: [Colors.blue.shade100, Colors.white],
+            stops: const [0.0, 0.7],
           ),
         ),
         child: Padding(
@@ -25,56 +26,87 @@ class ProfilePage extends StatelessWidget {
           child: Column(
             children: [
               const SizedBox(height: 32),
-              const CircleAvatar(
-                radius: 50,
-                backgroundColor: Colors.blue,
-                child: Icon(Icons.person, size: 50, color: Colors.white),
+              Container(
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.blue.withOpacity(0.2),
+                      spreadRadius: 5,
+                      blurRadius: 15,
+                    ),
+                  ],
+                ),
+                child: CircleAvatar(
+                  radius: 60,
+                  backgroundColor: Colors.blue.shade400,
+                  child: const Icon(
+                    Icons.person,
+                    size: 60,
+                    color: Colors.white,
+                  ),
+                ),
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 20),
               Text(
                 userEmail,
                 style: const TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
+                  color: Colors.black87,
                 ),
               ),
-              const SizedBox(height: 32),
-
+              const SizedBox(height: 40),
               Container(
-                padding: const EdgeInsets.all(16),
+                padding: const EdgeInsets.all(24),
                 decoration: BoxDecoration(
                   color: Colors.white,
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: BorderRadius.circular(20),
                   boxShadow: [
                     BoxShadow(
                       color: Colors.blue.withOpacity(0.1),
                       spreadRadius: 5,
-                      blurRadius: 10,
+                      blurRadius: 20,
+                      offset: const Offset(0, 10),
                     ),
                   ],
                 ),
                 child: Column(
                   children: [
-                    _buildProfileItem(Icons.email, 'Email', userEmail),
-                    const Divider(),
                     _buildProfileItem(
-                      Icons.access_time,
-                      'Member Since',
-                      user?.metadata.creationTime?.toString() ?? 'N/A',
+                      Icons.email_rounded,
+                      'Email',
+                      userEmail,
+                      Colors.blue.shade400,
                     ),
-                    const Divider(),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 16),
+                      child: Divider(height: 1),
+                    ),
                     _buildProfileItem(
-                      Icons.calendar_today,
+                      Icons.access_time_rounded,
+                      'Member Since',
+                      _formatDateTime(user?.metadata.creationTime),
+                      Colors.green.shade400,
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 16),
+                      child: Divider(height: 1),
+                    ),
+                    _buildProfileItem(
+                      Icons.calendar_today_rounded,
                       'Last Login',
-                      user?.metadata.lastSignInTime?.toString() ?? 'N/A',
+                      _formatDateTime(user?.metadata.lastSignInTime),
+                      Colors.orange.shade400,
                     ),
                   ],
                 ),
               ),
-              const SizedBox(height: 24),
+              const SizedBox(height: 32),
               const ChangePasswordWidget(),
               const SizedBox(height: 24),
               const DeleteAccountWidget(),
+              const SizedBox(height: 16),
             ],
           ),
         ),
@@ -82,31 +114,54 @@ class ProfilePage extends StatelessWidget {
     );
   }
 
-  Widget _buildProfileItem(IconData icon, String title, String value) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8),
-      child: Row(
-        children: [
-          Icon(icon, color: Colors.blue, size: 24),
-          const SizedBox(width: 16),
-          Column(
+  String _formatDateTime(DateTime? dateTime) {
+    if (dateTime == null) return 'N/A';
+    return '${dateTime.day}/${dateTime.month}/${dateTime.year} ${dateTime.hour}:${dateTime.minute}';
+  }
+
+  Widget _buildProfileItem(
+    IconData icon,
+    String title,
+    String value,
+    Color iconColor,
+  ) {
+    return Row(
+      children: [
+        Container(
+          padding: const EdgeInsets.all(10),
+          decoration: BoxDecoration(
+            color: iconColor.withOpacity(0.1),
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: Icon(icon, color: iconColor, size: 24),
+        ),
+        const SizedBox(width: 16),
+        Expanded(
+          child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 title,
-                style: const TextStyle(fontSize: 14, color: Colors.grey),
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Colors.grey.shade600,
+                  fontWeight: FontWeight.w500,
+                ),
               ),
+              const SizedBox(height: 4),
               Text(
                 value,
                 style: const TextStyle(
                   fontSize: 16,
-                  fontWeight: FontWeight.w500,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.black87,
                 ),
+                overflow: TextOverflow.ellipsis,
               ),
             ],
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
