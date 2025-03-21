@@ -1106,7 +1106,6 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ),
 
-                        // Buttons Grid Enhancement
                         GridView.builder(
                           shrinkWrap: true,
                           physics: const NeverScrollableScrollPhysics(),
@@ -1115,7 +1114,7 @@ class _HomePageState extends State<HomePage> {
                                 crossAxisCount: 3,
                                 crossAxisSpacing: 12,
                                 mainAxisSpacing: 12,
-                                childAspectRatio: 1,
+                                childAspectRatio: 0.95,
                               ),
                           itemCount: _filteredButtons.length,
                           itemBuilder: (context, index) {
@@ -1191,65 +1190,69 @@ class _HomePageState extends State<HomePage> {
 
     return Stack(
       children: [
-        ElevatedButton(
-          onPressed: () {
-            addToRecentlyViewed(widget);
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => widget["page"]),
-            );
-          },
-          style: ElevatedButton.styleFrom(
-            backgroundColor: color,
-            foregroundColor: Colors.white,
-            elevation: 2,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
-            ),
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(_getCategoryIcon(category ?? 'Unknown'), size: 18),
-              const SizedBox(height: 4),
-              Text(
-                widget["title"],
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
-                ),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
+        Container(
+          width: double.infinity, // Tüm genişliği kapla
+          height: double.infinity, // Tüm yüksekliği kapla
+          child: ElevatedButton(
+            onPressed: () {
+              addToRecentlyViewed(widget);
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => widget["page"]),
+              );
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: color,
+              foregroundColor: Colors.white,
+              elevation: 2,
+              padding: const EdgeInsets.all(8), // Padding küçültüldü
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
               ),
-            ],
-          ),
-        ),
-        Positioned(
-          top: 0,
-          right: 0,
-          child: Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              shape: BoxShape.circle,
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.1),
-                  spreadRadius: 1,
-                  blurRadius: 3,
-                  offset: const Offset(0, 1),
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(_getCategoryIcon(category ?? 'Unknown'), size: 18),
+                const SizedBox(height: 4),
+                Text(
+                  widget["title"],
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    fontSize: 13, // Font boyutu küçültüldü
+                    fontWeight: FontWeight.w600,
+                  ),
+                  maxLines: 2, // 2 satıra kadar izin ver
+                  overflow: TextOverflow.ellipsis,
                 ),
               ],
             ),
-            child: IconButton(
-              icon: Icon(
+          ),
+        ),
+        Positioned(
+          top: 2,
+          right: 2,
+          child: InkWell(
+            onTap: () => toggleFavorite(widget),
+            child: Container(
+              padding: const EdgeInsets.all(3),
+              decoration: BoxDecoration(
+                color: Colors.white.withOpacity(0.8),
+                shape: BoxShape.circle,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.1),
+                    spreadRadius: 1,
+                    blurRadius: 1,
+                    offset: const Offset(0, 1),
+                  ),
+                ],
+              ),
+              child: Icon(
                 favorite ? Icons.favorite : Icons.favorite_border,
                 color: favorite ? Colors.red : Colors.grey.shade400,
+                size: 14,
               ),
-              iconSize: 16,
-              constraints: const BoxConstraints(minWidth: 24, minHeight: 24),
-              padding: EdgeInsets.zero,
-              onPressed: () => toggleFavorite(widget),
             ),
           ),
         ),
