@@ -3,6 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:login_app/components/elevated_button.dart';
 import 'package:login_app/components/range_slider.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:convert';
 import '../services/auth_service.dart';
 import '../components/column.dart';
 import '../components/row.dart';
@@ -83,6 +85,8 @@ import 'exercise_page.dart';
 import 'settings_page.dart';
 import 'widget_gallery_page.dart';
 import 'tip_detail_page.dart';
+
+enum WidgetViewMode { all, favorites, recentlyViewed }
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -180,11 +184,24 @@ class _HomePageState extends State<HomePage> {
   int _currentTipIndex = 0;
   PageController _tipPageController = PageController(viewportFraction: 0.9);
 
+  Map<String, List<Map<String, dynamic>>> _categorizedWidgets = {};
+  List<String> _categoryOrder = [];
+  String _selectedCategory = 'All';
+
+  List<Map<String, dynamic>> _recentlyViewedWidgets = [];
+
+  final int _maxRecentItems = 5;
+
+  List<Map<String, dynamic>> _favoriteWidgets = [];
+  WidgetViewMode _currentViewMode = WidgetViewMode.all;
+  bool _showCategoryFilter = true;
+
   @override
   void initState() {
     super.initState();
     _initializeWidgetList();
     _filterButtons('');
+    _loadSavedWidgets();
 
     _tipPageController.addListener(() {
       if (_tipPageController.page!.round() != _currentTipIndex) {
@@ -202,103 +219,168 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _initializeWidgetList() {
-    widgetList = [
-      {"title": "Column", "page": const ColumnView()},
-      {"title": "Row", "page": const RowView()},
-      {"title": "Stack", "page": const StackView()},
-      {"title": "ListView", "page": const ListViewView()},
-      {"title": "GridView", "page": const GridViewView()},
-      {
-        "title": "Single Child Scroll View",
-        "page": const SingleChildScrollViewExample(),
-      },
-      {"title": "Expanded", "page": const ExpandedExample()},
-      {"title": "Flexible", "page": const FlexibleExample()},
-      {"title": "Wrap", "page": const WrapExample()},
-      {"title": "Align", "page": const AlignView()},
-      {"title": "Center", "page": const CenterView()},
-      {"title": "SizedBox", "page": const SizedBoxView()},
-      {"title": "Padding", "page": const PaddingView()},
-      {"title": "Margin Via Container", "page": const MarginContainerView()},
-      {"title": "Container", "page": const ContainerView()},
-      {"title": "Card", "page": const CardView()},
-      {"title": "Divider", "page": const DividerView()},
-      {"title": "Spacer", "page": const SpacerView()},
-      {"title": "Aspect Ratio", "page": const AspectRatioView()},
-      {"title": "Text", "page": const TextView()},
-      {"title": "RichText", "page": const RichTextView()},
-      {"title": "Selectable Text", "page": const SelectableTextView()},
-      {"title": "TextField", "page": const TextFieldView()},
-      {"title": "Image", "page": const ImageView()},
-      {"title": "Icon", "page": const IconView()},
-      {"title": "Circle Avatar", "page": const CircleAvatarView()},
-      {"title": "Elevated Button", "page": const ElevatedButtonView()},
-      {"title": "Text Button", "page": const TextButtonView()},
-      {"title": "Outlined Button", "page": const OutlinedButtonView()},
-      {
-        "title": "Floating Action Button",
-        "page": const FloatingActionButtonView(),
-      },
-      {"title": "Icon Button", "page": const IconButtonView()},
-      {"title": "Popup Menu Button", "page": const PopupMenuButtonView()},
-      {"title": "TextForm Field Button", "page": const TextFormFieldView()},
-      {"title": "CheckBox", "page": const CheckboxView()},
-      {"title": "Radio", "page": const RadioView()},
-      {"title": "Switch", "page": const SwitchView()},
-      {"title": "Slider", "page": const SliderView()},
-      {"title": "Date Picker", "page": const DatePickerView()},
-      {"title": "Dropdown Button", "page": const DropdownButtonView()},
-      {"title": "Auto Complete", "page": const AutocompleteView()},
-      {"title": "Ranger Slider", "page": const RangeSliderView()},
-      {"title": "Navigator", "page": const NavigatorView()},
-      {"title": "Material Page Route", "page": const MaterialPageRouteView()},
-      {"title": "Named Routes", "page": const NamedRoutesView()},
-      {
-        "title": "Bottom Navigation Bar ",
-        "page": const BottomNavigationBarView(),
-      },
-      {"title": "Tab Bar", "page": const TabBarViewExample()},
-      {"title": "Drawer", "page": const DrawerExample()},
-      {"title": "App Bar", "page": const AppBarExample()},
-      {"title": "Animated Container", "page": const AnimatedContainerView()},
-      {"title": "Animated Opacity", "page": const AnimatedOpacityView()},
-      {"title": "Animated Align", "page": const AnimatedAlignView()},
-      {"title": "Animated Cross Fade", "page": const AnimatedCrossFadeView()},
-      {"title": "Animated Switcher", "page": const AnimatedSwitcherView()},
-      {"title": "Hero", "page": const HeroView()},
-      {"title": "Fade Transition", "page": const FadeTransitionView()},
-      {"title": "Slide Transition", "page": const SlideTransitionView()},
-      {"title": "Scale Transition", "page": const ScaleTransitionView()},
-      {"title": "Gesture Detector", "page": const GestureDetectorView()},
-      {"title": "Inkwell", "page": const InkWellView()},
-      {"title": "Dismissible", "page": const DismissibleView()},
-      {"title": "Draggable", "page": const DraggableView()},
-      {"title": "Alert Dialog", "page": const AlertDialogView()},
-      {"title": "Snack Bar", "page": const SnackBarView()},
-      {"title": "Bottom Sheet", "page": const BottomSheetView()},
-      {"title": "Modal Bottom Sheet", "page": const ModalBottomSheetView()},
-      {"title": "Simple Dialog", "page": const SimpleDialogView()},
-      {"title": "Toast", "page": const ToastExampleView()},
-      {"title": "HTTP", "page": const HttpExampleView()},
-      {"title": "Dio", "page": const DioExampleView()},
-      {"title": "Web Socket", "page": const WebSocketExampleView()},
-      {"title": "Shared Preferences", "page": const SharedPreferencesExample()},
-      {"title": "Custom Painter", "page": const AnimatedPainterExample()},
-      {"title": "Clip RRect", "page": const ClipRRectExample()},
-      {"title": "Clip Oval", "page": const ClipOvalExample()},
-      {"title": "Clip Path", "page": const ClipPathExample()},
-      {"title": "Transform", "page": const TransformExample()},
+    final Map<String, List<Map<String, dynamic>>> categorizedWidgets = {
+      'Layout': [
+        {"title": "Column", "page": const ColumnView()},
+        {"title": "Row", "page": const RowView()},
+        {"title": "Stack", "page": const StackView()},
+        {"title": "ListView", "page": const ListViewView()},
+        {"title": "GridView", "page": const GridViewView()},
+        {
+          "title": "Single Child Scroll View",
+          "page": const SingleChildScrollViewExample(),
+        },
+        {"title": "Expanded", "page": const ExpandedExample()},
+        {"title": "Flexible", "page": const FlexibleExample()},
+        {"title": "Wrap", "page": const WrapExample()},
+        {"title": "Align", "page": const AlignView()},
+        {"title": "Center", "page": const CenterView()},
+        {"title": "SizedBox", "page": const SizedBoxView()},
+        {"title": "Padding", "page": const PaddingView()},
+        {"title": "Margin Via Container", "page": const MarginContainerView()},
+        {"title": "Container", "page": const ContainerView()},
+        {"title": "Card", "page": const CardView()},
+        {"title": "Divider", "page": const DividerView()},
+        {"title": "Spacer", "page": const SpacerView()},
+        {"title": "Aspect Ratio", "page": const AspectRatioView()},
+      ],
+      'Content': [
+        {"title": "Text", "page": const TextView()},
+        {"title": "RichText", "page": const RichTextView()},
+        {"title": "Selectable Text", "page": const SelectableTextView()},
+        {"title": "TextField", "page": const TextFieldView()},
+        {"title": "Image", "page": const ImageView()},
+        {"title": "Icon", "page": const IconView()},
+        {"title": "Circle Avatar", "page": const CircleAvatarView()},
+      ],
+      'Input & Buttons': [
+        {"title": "Elevated Button", "page": const ElevatedButtonView()},
+        {"title": "Text Button", "page": const TextButtonView()},
+        {"title": "Outlined Button", "page": const OutlinedButtonView()},
+        {
+          "title": "Floating Action Button",
+          "page": const FloatingActionButtonView(),
+        },
+        {"title": "Icon Button", "page": const IconButtonView()},
+        {"title": "Popup Menu Button", "page": const PopupMenuButtonView()},
+        {"title": "TextForm Field Button", "page": const TextFormFieldView()},
+        {"title": "CheckBox", "page": const CheckboxView()},
+        {"title": "Radio", "page": const RadioView()},
+        {"title": "Switch", "page": const SwitchView()},
+        {"title": "Slider", "page": const SliderView()},
+        {"title": "Date Picker", "page": const DatePickerView()},
+        {"title": "Dropdown Button", "page": const DropdownButtonView()},
+        {"title": "Auto Complete", "page": const AutocompleteView()},
+        {"title": "Ranger Slider", "page": const RangeSliderView()},
+      ],
+      'Navigation': [
+        {"title": "Navigator", "page": const NavigatorView()},
+        {"title": "Material Page Route", "page": const MaterialPageRouteView()},
+        {"title": "Named Routes", "page": const NamedRoutesView()},
+        {
+          "title": "Bottom Navigation Bar",
+          "page": const BottomNavigationBarView(),
+        },
+        {"title": "Tab Bar", "page": const TabBarViewExample()},
+        {"title": "Drawer", "page": const DrawerExample()},
+        {"title": "App Bar", "page": const AppBarExample()},
+      ],
+      'Animation': [
+        {"title": "Animated Container", "page": const AnimatedContainerView()},
+        {"title": "Animated Opacity", "page": const AnimatedOpacityView()},
+        {"title": "Animated Align", "page": const AnimatedAlignView()},
+        {"title": "Animated Cross Fade", "page": const AnimatedCrossFadeView()},
+        {"title": "Animated Switcher", "page": const AnimatedSwitcherView()},
+        {"title": "Hero", "page": const HeroView()},
+        {"title": "Fade Transition", "page": const FadeTransitionView()},
+        {"title": "Slide Transition", "page": const SlideTransitionView()},
+        {"title": "Scale Transition", "page": const ScaleTransitionView()},
+      ],
+      'Interaction': [
+        {"title": "Gesture Detector", "page": const GestureDetectorView()},
+        {"title": "Inkwell", "page": const InkWellView()},
+        {"title": "Dismissible", "page": const DismissibleView()},
+        {"title": "Draggable", "page": const DraggableView()},
+      ],
+      'Dialog & Feedback': [
+        {"title": "Alert Dialog", "page": const AlertDialogView()},
+        {"title": "Snack Bar", "page": const SnackBarView()},
+        {"title": "Bottom Sheet", "page": const BottomSheetView()},
+        {"title": "Modal Bottom Sheet", "page": const ModalBottomSheetView()},
+        {"title": "Simple Dialog", "page": const SimpleDialogView()},
+        {"title": "Toast", "page": const ToastExampleView()},
+      ],
+      'Data & Backend': [
+        {"title": "HTTP", "page": const HttpExampleView()},
+        {"title": "Dio", "page": const DioExampleView()},
+        {"title": "Web Socket", "page": const WebSocketExampleView()},
+        {
+          "title": "Shared Preferences",
+          "page": const SharedPreferencesExample(),
+        },
+      ],
+      'Drawing & Clipping': [
+        {"title": "Custom Painter", "page": const AnimatedPainterExample()},
+        {"title": "Clip RRect", "page": const ClipRRectExample()},
+        {"title": "Clip Oval", "page": const ClipOvalExample()},
+        {"title": "Clip Path", "page": const ClipPathExample()},
+        {"title": "Transform", "page": const TransformExample()},
+      ],
+    };
+
+    final List<String> categoryOrder = [
+      'Layout',
+      'Content',
+      'Input & Buttons',
+      'Navigation',
+      'Animation',
+      'Interaction',
+      'Dialog & Feedback',
+      'Data & Backend',
+      'Drawing & Clipping',
     ];
+
+    widgetList = [];
+    for (final category in categoryOrder) {
+      widgetList.addAll(categorizedWidgets[category] ?? []);
+    }
+
+    _categorizedWidgets = categorizedWidgets;
+    _categoryOrder = categoryOrder;
   }
 
   void _filterButtons(String query) {
     setState(() {
+      _filteredButtons = [];
+      List<Map<String, dynamic>> widgetsToFilter;
+
+      switch (_currentViewMode) {
+        case WidgetViewMode.favorites:
+          widgetsToFilter = List.from(_favoriteWidgets);
+          break;
+        case WidgetViewMode.recentlyViewed:
+          widgetsToFilter = List.from(_recentlyViewedWidgets);
+          break;
+        case WidgetViewMode.all:
+        default:
+          if (_selectedCategory == 'All') {
+            widgetsToFilter = List.from(widgetList);
+          } else {
+            widgetsToFilter = List.from(
+              _categorizedWidgets[_selectedCategory] ?? [],
+            );
+          }
+          break;
+      }
+
+      _showCategoryFilter = _currentViewMode == WidgetViewMode.all;
+
       if (query.isEmpty) {
         _filteredButtons =
-            widgetList.map((widget) => _buildButton(widget)).toList();
+            widgetsToFilter.map((widget) => _buildButton(widget)).toList();
       } else {
         _filteredButtons =
-            widgetList
+            widgetsToFilter
                 .where(
                   (widget) => widget["title"].toString().toLowerCase().contains(
                     query.toLowerCase(),
@@ -308,6 +390,130 @@ class _HomePageState extends State<HomePage> {
                 .toList();
       }
     });
+  }
+
+  void _changeCategory(String category) {
+    setState(() {
+      _selectedCategory = category;
+      _filterButtons(_searchController.text);
+    });
+  }
+
+  bool isFavorite(Map<String, dynamic> widget) {
+    return _favoriteWidgets.any(
+      (element) => element["title"] == widget["title"],
+    );
+  }
+
+  void toggleFavorite(Map<String, dynamic> widget) {
+    setState(() {
+      if (isFavorite(widget)) {
+        _favoriteWidgets.removeWhere(
+          (element) => element["title"] == widget["title"],
+        );
+      } else {
+        _favoriteWidgets.add(widget);
+      }
+
+      _saveFavoriteWidgets();
+    });
+  }
+
+  void addToRecentlyViewed(Map<String, dynamic> widget) {
+    setState(() {
+      _recentlyViewedWidgets.removeWhere(
+        (element) => element["title"] == widget["title"],
+      );
+
+      _recentlyViewedWidgets.insert(0, widget);
+
+      if (_recentlyViewedWidgets.length > _maxRecentItems) {
+        _recentlyViewedWidgets = _recentlyViewedWidgets.sublist(
+          0,
+          _maxRecentItems,
+        );
+      }
+
+      _saveRecentlyViewedWidgets();
+    });
+  }
+
+  Future<void> _loadSavedWidgets() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    final favoriteWidgetsJson = prefs.getStringList('favorite_widgets') ?? [];
+    _favoriteWidgets =
+        favoriteWidgetsJson
+            .map((jsonStr) => json.decode(jsonStr) as Map<String, dynamic>)
+            .map((map) => _resolveWidgetFromData(map))
+            .toList();
+
+    final recentWidgetsJson = prefs.getStringList('recent_widgets') ?? [];
+    _recentlyViewedWidgets =
+        recentWidgetsJson
+            .map((jsonStr) => json.decode(jsonStr) as Map<String, dynamic>)
+            .map((map) => _resolveWidgetFromData(map))
+            .toList();
+  }
+
+  Future<void> _saveFavoriteWidgets() async {
+    final prefs = await SharedPreferences.getInstance();
+    final List<String> jsonList =
+        _favoriteWidgets
+            .map(
+              (widget) => json.encode({
+                "title": widget["title"],
+                "category": _getWidgetCategory(widget),
+              }),
+            )
+            .toList();
+
+    await prefs.setStringList('favorite_widgets', jsonList);
+  }
+
+  Future<void> _saveRecentlyViewedWidgets() async {
+    final prefs = await SharedPreferences.getInstance();
+    final List<String> jsonList =
+        _recentlyViewedWidgets
+            .map(
+              (widget) => json.encode({
+                "title": widget["title"],
+                "category": _getWidgetCategory(widget),
+              }),
+            )
+            .toList();
+
+    await prefs.setStringList('recent_widgets', jsonList);
+  }
+
+  Map<String, dynamic> _resolveWidgetFromData(Map<String, dynamic> data) {
+    final String title = data["title"];
+    final String category = data["category"];
+
+    if (_categorizedWidgets.containsKey(category)) {
+      final widget = _categorizedWidgets[category]?.firstWhere(
+        (w) => w["title"] == title,
+        orElse: () => {"title": title, "page": const Placeholder()},
+      );
+
+      if (widget != null) {
+        return widget;
+      }
+    }
+
+    return widgetList.firstWhere(
+      (w) => w["title"] == title,
+      orElse: () => {"title": title, "page": const Placeholder()},
+    );
+  }
+
+  String _getWidgetCategory(Map<String, dynamic> widget) {
+    for (final entry in _categorizedWidgets.entries) {
+      if (entry.value.any((w) => w["title"] == widget["title"])) {
+        return entry.key;
+      }
+    }
+    return "Unknown";
   }
 
   @override
@@ -721,95 +927,49 @@ class _HomePageState extends State<HomePage> {
                               _buildFeatureRow(
                                 icon: Icons.code,
                                 text:
-                                    "Clear, copy-paste ready code samples for quick implementation",
+                                    "Interactive code examples with clear explanations",
                               ),
                               _buildFeatureRow(
-                                icon: Icons.touch_app,
+                                icon: Icons.category,
                                 text:
-                                    "Interactive examples to see widgets in action",
+                                    "Organized by categories for easier navigation",
                               ),
                               _buildFeatureRow(
                                 icon: Icons.search,
                                 text:
-                                    "Quick search functionality to find specific widgets",
-                              ),
-                              _buildFeatureRow(
-                                icon: Icons.auto_awesome,
-                                text:
-                                    "Best practices and real-world usage scenarios",
-                              ),
-                              _buildFeatureRow(
-                                icon: Icons.update,
-                                text:
-                                    "Regular updates with new widgets and features",
+                                    "Searchable widget catalog for quick access",
                               ),
                               const SizedBox(height: 20),
-                              const Text(
-                                "💡 Pro Tips:",
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.blue,
+                              ElevatedButton(
+                                onPressed: () async {
+                                  final url = Uri.parse(
+                                    'https://flutter.dev/docs',
+                                  );
+                                  if (await canLaunchUrl(url)) {
+                                    await launchUrl(url);
+                                  }
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.blue,
+                                  foregroundColor: Colors.white,
+                                  padding: const EdgeInsets.symmetric(
+                                    vertical: 16,
+                                    horizontal: 24,
+                                  ),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
                                 ),
-                              ),
-                              const SizedBox(height: 12),
-                              Container(
-                                padding: const EdgeInsets.all(12),
-                                decoration: BoxDecoration(
-                                  color: Colors.blue.withOpacity(0.1),
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                                child: const Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                child: const Row(
+                                  mainAxisSize: MainAxisSize.min,
                                   children: [
+                                    Icon(Icons.link),
+                                    SizedBox(width: 8),
                                     Text(
-                                      "• Experiment with the interactive examples",
-                                      style: TextStyle(fontSize: 16),
-                                    ),
-                                    SizedBox(height: 4),
-                                    Text(
-                                      "• Study the source code for implementation details",
-                                      style: TextStyle(fontSize: 16),
-                                    ),
-                                    SizedBox(height: 4),
-                                    Text(
-                                      "• Combine multiple widgets to create complex UIs",
+                                      "Visit Flutter Documentation",
                                       style: TextStyle(fontSize: 16),
                                     ),
                                   ],
-                                ),
-                              ),
-                              const SizedBox(height: 24),
-                              Center(
-                                child: ElevatedButton.icon(
-                                  onPressed: () {
-                                    final Uri githubUrl = Uri.parse(
-                                      "https://github.com/melihalkbk/login-app",
-                                    );
-                                    launchUrl(githubUrl);
-                                  },
-                                  icon: const Icon(
-                                    Icons.code,
-                                    color: Colors.white,
-                                  ),
-                                  label: const Text(
-                                    "Explore Source Code",
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.black87,
-                                    foregroundColor: Colors.white,
-                                    padding: const EdgeInsets.symmetric(
-                                      vertical: 16,
-                                      horizontal: 24,
-                                    ),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(12),
-                                    ),
-                                  ),
                                 ),
                               ),
                             ],
@@ -851,6 +1011,100 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ),
                         const SizedBox(height: 16),
+                        Container(
+                          margin: const EdgeInsets.only(bottom: 16, top: 16),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(12),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.05),
+                                blurRadius: 10,
+                                spreadRadius: 0,
+                                offset: const Offset(0, 2),
+                              ),
+                            ],
+                          ),
+                          child: Row(
+                            children: [
+                              _buildViewTab(
+                                title: "All",
+                                isActive:
+                                    _currentViewMode == WidgetViewMode.all,
+                                onTap: () {
+                                  setState(() {
+                                    _currentViewMode = WidgetViewMode.all;
+                                    _filterButtons(_searchController.text);
+                                  });
+                                },
+                                icon: Icons.widgets,
+                              ),
+                              _buildViewTab(
+                                title: "Favorites",
+                                isActive:
+                                    _currentViewMode ==
+                                    WidgetViewMode.favorites,
+                                onTap: () {
+                                  setState(() {
+                                    _currentViewMode = WidgetViewMode.favorites;
+                                    _filterButtons(_searchController.text);
+                                  });
+                                },
+                                icon: Icons.favorite,
+                              ),
+                              _buildViewTab(
+                                title: "Recently",
+                                isActive:
+                                    _currentViewMode ==
+                                    WidgetViewMode.recentlyViewed,
+                                onTap: () {
+                                  setState(() {
+                                    _currentViewMode =
+                                        WidgetViewMode.recentlyViewed;
+                                    _filterButtons(_searchController.text);
+                                  });
+                                },
+                                icon: Icons.history,
+                              ),
+                            ],
+                          ),
+                        ),
+                        if (_showCategoryFilter)
+                          Container(
+                            height: 50,
+                            margin: const EdgeInsets.only(bottom: 16),
+                            child: ListView(
+                              scrollDirection: Axis.horizontal,
+                              children: [
+                                _buildCategoryChip('All'),
+                                ...(_categoryOrder.map(
+                                  (category) => _buildCategoryChip(category),
+                                )).toList(),
+                              ],
+                            ),
+                          ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                _getHeaderTitle(),
+                                style: const TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              Text(
+                                '${_filteredButtons.length} widgets',
+                                style: TextStyle(
+                                  color: Colors.grey.shade600,
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
 
                         // Buttons Grid Enhancement
                         GridView.builder(
@@ -858,35 +1112,14 @@ class _HomePageState extends State<HomePage> {
                           physics: const NeverScrollableScrollPhysics(),
                           gridDelegate:
                               const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 2,
-                                crossAxisSpacing: 16,
-                                mainAxisSpacing: 16,
-                                childAspectRatio: 2.5,
+                                crossAxisCount: 3,
+                                crossAxisSpacing: 12,
+                                mainAxisSpacing: 12,
+                                childAspectRatio: 1,
                               ),
                           itemCount: _filteredButtons.length,
                           itemBuilder: (context, index) {
-                            return Container(
-                              decoration: BoxDecoration(
-                                gradient: LinearGradient(
-                                  begin: Alignment.topLeft,
-                                  end: Alignment.bottomRight,
-                                  colors: [
-                                    Colors.blue.shade400,
-                                    Colors.blue.shade600,
-                                  ],
-                                ),
-                                borderRadius: BorderRadius.circular(12),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.blue.withOpacity(0.2),
-                                    spreadRadius: 1,
-                                    blurRadius: 4,
-                                    offset: const Offset(0, 2),
-                                  ),
-                                ],
-                              ),
-                              child: _filteredButtons[index],
-                            );
+                            return _filteredButtons[index];
                           },
                         ),
                       ],
@@ -944,25 +1177,134 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildButton(Map<String, dynamic> widget) {
-    return ElevatedButton(
-      onPressed: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => widget["page"]),
-        );
-      },
-      style: ElevatedButton.styleFrom(
-        backgroundColor: Colors.transparent,
-        foregroundColor: Colors.white,
-        elevation: 0,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      ),
-      child: Text(
-        widget["title"],
-        textAlign: TextAlign.center,
-        style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-      ),
+    String? category;
+
+    for (final cat in _categorizedWidgets.keys) {
+      if (_categorizedWidgets[cat]!.contains(widget)) {
+        category = cat;
+        break;
+      }
+    }
+
+    Color color = _getCategoryColor(category ?? 'Unknown');
+    bool favorite = isFavorite(widget);
+
+    return Stack(
+      children: [
+        ElevatedButton(
+          onPressed: () {
+            addToRecentlyViewed(widget);
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => widget["page"]),
+            );
+          },
+          style: ElevatedButton.styleFrom(
+            backgroundColor: color,
+            foregroundColor: Colors.white,
+            elevation: 2,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(_getCategoryIcon(category ?? 'Unknown'), size: 18),
+              const SizedBox(height: 4),
+              Text(
+                widget["title"],
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                ),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ],
+          ),
+        ),
+        Positioned(
+          top: 0,
+          right: 0,
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              shape: BoxShape.circle,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.1),
+                  spreadRadius: 1,
+                  blurRadius: 3,
+                  offset: const Offset(0, 1),
+                ),
+              ],
+            ),
+            child: IconButton(
+              icon: Icon(
+                favorite ? Icons.favorite : Icons.favorite_border,
+                color: favorite ? Colors.red : Colors.grey.shade400,
+              ),
+              iconSize: 16,
+              constraints: const BoxConstraints(minWidth: 24, minHeight: 24),
+              padding: EdgeInsets.zero,
+              onPressed: () => toggleFavorite(widget),
+            ),
+          ),
+        ),
+      ],
     );
+  }
+
+  Color _getCategoryColor(String category) {
+    switch (category) {
+      case 'Layout':
+        return Colors.blueAccent;
+      case 'Content':
+        return Colors.green;
+      case 'Input & Buttons':
+        return Colors.amber.shade700;
+      case 'Navigation':
+        return Colors.purple;
+      case 'Animation':
+        return Colors.pinkAccent;
+      case 'Interaction':
+        return Colors.teal;
+      case 'Dialog & Feedback':
+        return Colors.deepOrange;
+      case 'Data & Backend':
+        return Colors.indigo;
+      case 'Drawing & Clipping':
+        return Colors.brown;
+      default:
+        return Colors.blue.shade700;
+    }
+  }
+
+  IconData _getCategoryIcon(String category) {
+    switch (category) {
+      case 'Layout':
+        return Icons.grid_view;
+      case 'Content':
+        return Icons.text_fields;
+      case 'Input & Buttons':
+        return Icons.touch_app;
+      case 'Navigation':
+        return Icons.navigation;
+      case 'Animation':
+        return Icons.animation;
+      case 'Interaction':
+        return Icons.swipe;
+      case 'Dialog & Feedback':
+        return Icons.notifications;
+      case 'Data & Backend':
+        return Icons.cloud;
+      case 'Drawing & Clipping':
+        return Icons.brush;
+      default:
+        return Icons.widgets;
+    }
   }
 
   Widget _buildFeatureRow({required IconData icon, required String text}) {
@@ -983,5 +1325,81 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
     );
+  }
+
+  Widget _buildCategoryChip(String category) {
+    final isSelected = _selectedCategory == category;
+
+    return Padding(
+      padding: const EdgeInsets.only(right: 8.0),
+      child: FilterChip(
+        label: Text(category),
+        selected: isSelected,
+        onSelected: (bool selected) {
+          if (selected) {
+            _changeCategory(category);
+          }
+        },
+        labelStyle: TextStyle(
+          color: isSelected ? Colors.white : Colors.blue,
+          fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+        ),
+        backgroundColor: Colors.blue.withOpacity(0.1),
+        selectedColor: Colors.blue,
+        checkmarkColor: Colors.white,
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      ),
+    );
+  }
+
+  Widget _buildViewTab({
+    required String title,
+    required bool isActive,
+    required VoidCallback onTap,
+    required IconData icon,
+  }) {
+    return Expanded(
+      child: InkWell(
+        onTap: onTap,
+        child: Container(
+          padding: const EdgeInsets.symmetric(vertical: 12),
+          decoration: BoxDecoration(
+            border: Border(
+              bottom: BorderSide(
+                color: isActive ? Colors.blue : Colors.transparent,
+                width: 3,
+              ),
+            ),
+          ),
+          child: Column(
+            children: [
+              Icon(icon, color: isActive ? Colors.blue : Colors.grey),
+              const SizedBox(height: 4),
+              Text(
+                title,
+                style: TextStyle(
+                  color: isActive ? Colors.blue : Colors.grey,
+                  fontWeight: isActive ? FontWeight.bold : FontWeight.normal,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  String _getHeaderTitle() {
+    switch (_currentViewMode) {
+      case WidgetViewMode.favorites:
+        return 'Favorite Widgets';
+      case WidgetViewMode.recentlyViewed:
+        return 'Recently Viewed Widgets';
+      case WidgetViewMode.all:
+      default:
+        return _selectedCategory == 'All'
+            ? 'All Widgets'
+            : '$_selectedCategory Widgets';
+    }
   }
 }
