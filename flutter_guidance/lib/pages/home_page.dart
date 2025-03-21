@@ -82,6 +82,7 @@ import 'profile_page.dart';
 import 'exercise_page.dart';
 import 'settings_page.dart';
 import 'widget_gallery_page.dart';
+import 'tip_detail_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -97,11 +98,107 @@ class _HomePageState extends State<HomePage> {
   List<Widget> _filteredButtons = [];
   int _selectedIndex = 0;
 
+  final List<Map<String, dynamic>> _dailyTips = [
+    {
+      'title': 'StatefulWidget vs StatelessWidget',
+      'description':
+          'Use StatefulWidget when your widget needs to maintain state that changes over time.',
+      'icon': Icons.compare_arrows,
+      'color': Colors.blue,
+      'detailedExplanation':
+          'StatelessWidget is used when the widget doesn\'t need to maintain state. It\'s simpler and more efficient when you don\'t need to track changes or update the UI based on user interactions. StatefulWidget, on the other hand, has a separate State object that can change during the widget\'s lifetime. Use it when you need to handle user interactions, animations, or any data that might change.',
+      'codeExample':
+          'See detailed examples in the documentation on how to use StatelessWidget and StatefulWidget properly.',
+      'bestPractices': [
+        'Use StatelessWidget when the UI doesn\'t change dynamically',
+        'Use StatefulWidget when you need to maintain state or handle user interactions',
+        'Keep StatefulWidget as small as possible for better performance',
+        'Extract complex UI parts into StatelessWidget components',
+      ],
+      'docUrl':
+          'https://api.flutter.dev/flutter/widgets/StatefulWidget-class.html',
+    },
+    {
+      'title': 'const Constructor Benefits',
+      'description':
+          'Always use const constructors when possible to improve performance.',
+      'icon': Icons.speed,
+      'color': Colors.green,
+      'detailedExplanation':
+          'Using the const keyword for constructors in Flutter allows the framework to optimize rendering by reusing widget instances. When a widget is const, Flutter doesn\'t have to rebuild it if its parent rebuilds, leading to better performance, especially in large widget trees. In essence, const widgets are cached and reused when possible.',
+      'codeExample':
+          'See examples in the documentation for how to effectively use const constructors to improve app performance.',
+      'bestPractices': [
+        'Use const constructors whenever all constructor arguments are also const',
+        'Consider making your custom widget constructors const-compatible',
+        'Use IntelliJ/Android Studio\'s "Add const constructor" intention',
+        'Remember that const widgets can\'t depend on non-const values like variables',
+      ],
+      'docUrl':
+          'https://dart.dev/guides/language/effective-dart/usage#do-use-const-for-constant-expressions',
+    },
+    {
+      'title': 'ListView.builder for Large Lists',
+      'description':
+          'For long lists, use ListView.builder instead of ListView for better performance.',
+      'icon': Icons.list,
+      'color': Colors.orange,
+      'detailedExplanation':
+          'ListView.builder creates items as they become visible on screen (lazy loading), while a standard ListView with children creates all items at once. For long lists, ListView.builder is much more memory-efficient because it only renders the items that are currently visible plus a small buffer for smooth scrolling.',
+      'codeExample':
+          'Check the documentation for complete examples of how to implement ListView.builder for efficient list rendering.',
+      'bestPractices': [
+        'Use ListView.builder for lists with many items or unknown length',
+        'Implement proper item recycling with keys for stateful items',
+        'Consider ListView.separated when you need dividers between items',
+        'For even better performance with complex items, consider caching widgets',
+      ],
+      'docUrl':
+          'https://api.flutter.dev/flutter/widgets/ListView/ListView.builder.html',
+    },
+    {
+      'title': 'Using Future Builder',
+      'description':
+          'FutureBuilder helps you handle async operations and their UI states elegantly.',
+      'icon': Icons.update,
+      'color': Colors.purple,
+      'detailedExplanation':
+          'FutureBuilder is a built-in widget in Flutter that makes it easier to work with asynchronous data. It provides a clean way to handle different states of a Future (loading, success, error) and update the UI accordingly. This reduces the need for manual state management when working with async operations like network requests or database queries.',
+      'codeExample':
+          'See the documentation for detailed examples of handling loading, error, and success states with FutureBuilder.',
+      'bestPractices': [
+        'Always handle all possible states: loading, error, and success',
+        'Consider using a cache for frequently accessed data',
+        'Use FutureBuilder.initialData for a better user experience',
+        'Extract FutureBuilder into a separate widget for better code organization',
+      ],
+      'docUrl':
+          'https://api.flutter.dev/flutter/widgets/FutureBuilder-class.html',
+    },
+  ];
+
+  int _currentTipIndex = 0;
+  PageController _tipPageController = PageController(viewportFraction: 0.9);
+
   @override
   void initState() {
     super.initState();
     _initializeWidgetList();
     _filterButtons('');
+
+    _tipPageController.addListener(() {
+      if (_tipPageController.page!.round() != _currentTipIndex) {
+        setState(() {
+          _currentTipIndex = _tipPageController.page!.round();
+        });
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _tipPageController.dispose();
+    super.dispose();
   }
 
   void _initializeWidgetList() {
@@ -330,6 +427,226 @@ class _HomePageState extends State<HomePage> {
                                     ),
                                   ),
                                 ],
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(height: 24),
+
+                        // Daily Flutter Tips Section
+                        Container(
+                          width: double.infinity,
+                          padding: const EdgeInsets.all(20),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(16),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.blue.withOpacity(0.1),
+                                spreadRadius: 5,
+                                blurRadius: 10,
+                                offset: const Offset(0, 3),
+                              ),
+                            ],
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  const Text(
+                                    "Daily Flutter Tips",
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.blue,
+                                    ),
+                                  ),
+                                  TextButton(
+                                    onPressed: () {},
+                                    child: const Text(
+                                      "View All",
+                                      style: TextStyle(color: Colors.blue),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 16),
+                              Container(
+                                height: 230,
+                                child: PageView.builder(
+                                  controller: _tipPageController,
+                                  itemCount: _dailyTips.length,
+                                  itemBuilder: (context, index) {
+                                    final tip = _dailyTips[index];
+                                    return Padding(
+                                      padding: const EdgeInsets.only(right: 12),
+                                      child: Card(
+                                        elevation: 3,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(
+                                            12,
+                                          ),
+                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(16),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Row(
+                                                children: [
+                                                  Container(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                          10,
+                                                        ),
+                                                    decoration: BoxDecoration(
+                                                      color: (tip['color']
+                                                              as Color)
+                                                          .withOpacity(0.2),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                            10,
+                                                          ),
+                                                    ),
+                                                    child: Icon(
+                                                      tip['icon'] as IconData,
+                                                      color:
+                                                          tip['color'] as Color,
+                                                      size: 24,
+                                                    ),
+                                                  ),
+                                                  const SizedBox(width: 16),
+                                                  Expanded(
+                                                    child: Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Text(
+                                                          "Tip #${index + 1}",
+                                                          style: TextStyle(
+                                                            fontSize: 14,
+                                                            color:
+                                                                Colors
+                                                                    .grey
+                                                                    .shade600,
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                          ),
+                                                        ),
+                                                        const SizedBox(
+                                                          height: 4,
+                                                        ),
+                                                        Text(
+                                                          tip['title']
+                                                              as String,
+                                                          style:
+                                                              const TextStyle(
+                                                                fontSize: 18,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                              ),
+                                                          maxLines: 1,
+                                                          overflow:
+                                                              TextOverflow
+                                                                  .ellipsis,
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              const SizedBox(height: 12),
+                                              Expanded(
+                                                child: SingleChildScrollView(
+                                                  child: Text(
+                                                    tip['description']
+                                                        as String,
+                                                    style: TextStyle(
+                                                      fontSize: 16,
+                                                      color:
+                                                          Colors.grey.shade700,
+                                                      height: 1.5,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              const SizedBox(
+                                                height: 12,
+                                              ), // azalttık
+                                              ElevatedButton(
+                                                onPressed: () {
+                                                  Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder:
+                                                          (
+                                                            context,
+                                                          ) => TipDetailPage(
+                                                            tip: tip,
+                                                            relatedTips:
+                                                                _dailyTips
+                                                                    .where(
+                                                                      (t) =>
+                                                                          t !=
+                                                                          tip,
+                                                                    )
+                                                                    .take(2)
+                                                                    .toList(),
+                                                          ),
+                                                    ),
+                                                  );
+                                                },
+                                                style: ElevatedButton.styleFrom(
+                                                  backgroundColor:
+                                                      tip['color'] as Color,
+                                                  foregroundColor: Colors.white,
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                          8,
+                                                        ),
+                                                  ),
+                                                  minimumSize: const Size(
+                                                    double.infinity,
+                                                    40,
+                                                  ),
+                                                ),
+                                                child: const Text("Learn More"),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                              const SizedBox(height: 12),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: List.generate(
+                                  _dailyTips.length,
+                                  (index) => Container(
+                                    width: 8,
+                                    height: 8,
+                                    margin: const EdgeInsets.symmetric(
+                                      horizontal: 4,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color:
+                                          index == _currentTipIndex
+                                              ? Colors.blue
+                                              : Colors.grey.shade300,
+                                    ),
+                                  ),
+                                ),
                               ),
                             ],
                           ),
