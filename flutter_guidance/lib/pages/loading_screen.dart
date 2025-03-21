@@ -11,21 +11,16 @@ class _LoadingScreenState extends State<LoadingScreen>
     with SingleTickerProviderStateMixin {
   late AnimationController _pulseAnimation;
   late Animation<double> _scaleAnimation;
-  late Animation<double> _opacityAnimation;
 
   @override
   void initState() {
     super.initState();
     _pulseAnimation = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 2),
+      duration: const Duration(milliseconds: 1200),
     )..repeat(reverse: true);
 
-    _scaleAnimation = Tween<double>(begin: 0.95, end: 1.0).animate(
-      CurvedAnimation(parent: _pulseAnimation, curve: Curves.easeInOut),
-    );
-
-    _opacityAnimation = Tween<double>(begin: 0.6, end: 1.0).animate(
+    _scaleAnimation = Tween<double>(begin: 0.9, end: 1.1).animate(
       CurvedAnimation(parent: _pulseAnimation, curve: Curves.easeInOut),
     );
   }
@@ -49,98 +44,56 @@ class _LoadingScreenState extends State<LoadingScreen>
       ),
       child: Scaffold(
         backgroundColor: Colors.transparent,
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ScaleTransition(
-                scale: _scaleAnimation,
-                child: FadeTransition(
-                  opacity: _opacityAnimation,
-                  child: Container(
-                    height: 150,
-                    width: 150,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.white,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.blue.withOpacity(0.2),
-                          spreadRadius: 5,
-                          blurRadius: 15,
-                          offset: const Offset(0, 5),
-                        ),
-                      ],
-                    ),
-                    child: ClipOval(
-                      child: Image.asset('assets/logo.jpg', fit: BoxFit.cover),
-                    ),
-                  ),
+        body: Center(child: _buildLoadingState()),
+      ),
+    );
+  }
+
+  Widget _buildLoadingState() {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        ScaleTransition(
+          scale: _scaleAnimation,
+          child: Container(
+            height: 120,
+            width: 120,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: Colors.white,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.blue.withOpacity(0.2),
+                  spreadRadius: 3,
+                  blurRadius: 10,
+                  offset: const Offset(0, 3),
                 ),
-              ),
-              const SizedBox(height: 40),
-              const Text(
-                "Welcome",
-                style: TextStyle(
-                  fontSize: 32,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.blue,
-                  letterSpacing: 1.2,
-                  shadows: [
-                    Shadow(
-                      color: Colors.black12,
-                      offset: Offset(0, 2),
-                      blurRadius: 4,
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 12),
-              Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 24,
-                  vertical: 8,
-                ),
-                decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.3),
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Text(
-                  "Learn Exercise and Have Fun",
-                  style: TextStyle(
-                    fontSize: 18,
-                    color: Colors.grey.shade700,
-                    letterSpacing: 0.8,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ),
-              const SizedBox(height: 50),
-              Container(
-                width: 60,
-                height: 60,
-                padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.9),
-                  borderRadius: BorderRadius.circular(30),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.blue.withOpacity(0.1),
-                      spreadRadius: 2,
-                      blurRadius: 8,
-                      offset: const Offset(0, 2),
-                    ),
-                  ],
-                ),
-                child: CircularProgressIndicator(
-                  color: Colors.blue.shade400,
-                  strokeWidth: 3,
-                ),
-              ),
-            ],
+              ],
+            ),
+            child: ClipOval(
+              child: Image.asset('assets/logo.jpg', fit: BoxFit.cover),
+            ),
           ),
         ),
-      ),
+        const SizedBox(height: 24),
+        const Text(
+          "Welcome",
+          style: TextStyle(
+            fontSize: 28,
+            fontWeight: FontWeight.bold,
+            color: Colors.blue,
+          ),
+        ),
+        const SizedBox(height: 8),
+        Text(
+          "Learn Exercise and Have Fun",
+          style: TextStyle(
+            fontSize: 18,
+            color: Colors.grey.shade600,
+            letterSpacing: 0.5,
+          ),
+        ),
+      ],
     );
   }
 }
