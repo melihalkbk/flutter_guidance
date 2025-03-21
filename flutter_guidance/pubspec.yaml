@@ -24,7 +24,7 @@ dependencies:
   hive_flutter: ^1.1.0
   video_player: ^2.8.2
   flutter_launcher_icons: ^0.14.3
-  firebase_messaging: ^14.7.10
+  firebase_messaging: ^15.2.4
   flutter_local_notifications: ^16.2.0
 
 dev_dependencies:

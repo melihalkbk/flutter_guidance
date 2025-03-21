@@ -81,6 +81,7 @@ import '../components/transform.dart';
 import 'profile_page.dart';
 import 'exercise_page.dart';
 import 'settings_page.dart';
+import 'widget_gallery_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -579,6 +580,8 @@ class _HomePageState extends State<HomePage> {
               : _selectedIndex == 1
               ? const ExercisePage()
               : _selectedIndex == 2
+              ? const WidgetGalleryPage()
+              : _selectedIndex == 3
               ? const ProfilePage()
               : const SettingsPage(),
       bottomNavigationBar: Container(
@@ -607,6 +610,10 @@ class _HomePageState extends State<HomePage> {
             BottomNavigationBarItem(
               icon: Icon(Icons.assignment),
               label: 'Exercises',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.widgets),
+              label: 'Widgets',
             ),
             BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
             BottomNavigationBarItem(
