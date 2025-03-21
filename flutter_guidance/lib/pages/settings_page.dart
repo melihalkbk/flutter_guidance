@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'notifications_page.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
@@ -40,7 +41,12 @@ class SettingsPage extends StatelessWidget {
                       "Notifications",
                       "Manage app notifications",
                       onTap: () {
-                        // Navigate to notifications settings
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const NotificationsPage(),
+                          ),
+                        );
                       },
                     ),
                     _buildSettingItem(
