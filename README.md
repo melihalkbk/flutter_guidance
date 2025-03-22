@@ -12,8 +12,10 @@ This educational project aims to make Flutter development more accessible and en
 The app is structured to provide an intuitive learning experience, guiding users from basic UI components to complex widget implementations and best practices for Flutter development.
 </p>
 
-## 🔆 Overall Look'n Feel 
-[Insert app demo GIF or screenshots here]
+## 🔆 Overall Look'n Feel
+
+[![Watch the demo](https://img.youtube.com/vi/nC5Lo_rANus/0.jpg)](https://www.youtube.com/watch?v=nC5Lo_rANus)
+
 
 ## ⚙️ Project Architecture
 
