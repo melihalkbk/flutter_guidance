@@ -232,4 +232,10 @@ Contributions are welcome! If you'd like to contribute to **Flutter Guidance**, 
 
 5. **Open a Pull Request** and briefly describe your changes.
 
+### 📝 License
+
+This project is licensed under the **MIT License**.  
+See the [LICENSE](LICENSE) file for full details.
+
+
 
