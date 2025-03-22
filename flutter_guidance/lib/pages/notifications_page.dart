@@ -240,8 +240,6 @@ class _NotificationsPageState extends State<NotificationsPage> {
           const SizedBox(height: 16),
           ElevatedButton.icon(
             onPressed: () {
-              // Ideally, you would open the device's notification settings here
-              // This varies by platform and might require native code
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(content: Text('Opening device settings...')),
               );

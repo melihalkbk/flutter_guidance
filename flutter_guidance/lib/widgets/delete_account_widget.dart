@@ -46,14 +46,12 @@ class _DeleteAccountWidgetState extends State<DeleteAccountWidget> {
     try {
       await FirebaseAuth.instance.currentUser?.delete();
       if (mounted) {
-        Navigator.of(context).pop(); // Close dialog
-        Navigator.of(
-          context,
-        ).pushReplacementNamed('/login'); // Navigate to login
+        Navigator.of(context).pop();
+        Navigator.of(context).pushReplacementNamed('/login');
       }
     } on FirebaseAuthException catch (e) {
       if (mounted) {
-        Navigator.of(context).pop(); // Close dialog
+        Navigator.of(context).pop();
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(e.message ?? 'Failed to delete account'),

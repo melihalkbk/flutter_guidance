@@ -411,10 +411,23 @@ class _HomePageState extends State<HomePage> {
         _favoriteWidgets.removeWhere(
           (element) => element["title"] == widget["title"],
         );
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Removed from favorites'),
+            duration: Duration(seconds: 1),
+            behavior: SnackBarBehavior.floating,
+          ),
+        );
       } else {
         _favoriteWidgets.add(widget);
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Added to favorites'),
+            duration: Duration(seconds: 1),
+            behavior: SnackBarBehavior.floating,
+          ),
+        );
       }
-
       _saveFavoriteWidgets();
     });
   }
@@ -782,9 +795,7 @@ class _HomePageState extends State<HomePage> {
                                                   ),
                                                 ),
                                               ),
-                                              const SizedBox(
-                                                height: 12,
-                                              ), // azalttık
+                                              const SizedBox(height: 12),
                                               ElevatedButton(
                                                 onPressed: () {
                                                   Navigator.push(
@@ -1191,8 +1202,8 @@ class _HomePageState extends State<HomePage> {
     return Stack(
       children: [
         Container(
-          width: double.infinity, // Tüm genişliği kapla
-          height: double.infinity, // Tüm yüksekliği kapla
+          width: double.infinity,
+          height: double.infinity,
           child: ElevatedButton(
             onPressed: () {
               addToRecentlyViewed(widget);
@@ -1205,7 +1216,7 @@ class _HomePageState extends State<HomePage> {
               backgroundColor: color,
               foregroundColor: Colors.white,
               elevation: 2,
-              padding: const EdgeInsets.all(8), // Padding küçültüldü
+              padding: const EdgeInsets.all(8),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
               ),
@@ -1219,10 +1230,10 @@ class _HomePageState extends State<HomePage> {
                   widget["title"],
                   textAlign: TextAlign.center,
                   style: const TextStyle(
-                    fontSize: 13, // Font boyutu küçültüldü
+                    fontSize: 13,
                     fontWeight: FontWeight.w600,
                   ),
-                  maxLines: 2, // 2 satıra kadar izin ver
+                  maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
               ],
@@ -1232,18 +1243,18 @@ class _HomePageState extends State<HomePage> {
         Positioned(
           top: 2,
           right: 2,
-          child: InkWell(
+          child: GestureDetector(
             onTap: () => toggleFavorite(widget),
             child: Container(
-              padding: const EdgeInsets.all(3),
+              padding: const EdgeInsets.all(4),
               decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.8),
+                color: Colors.white,
                 shape: BoxShape.circle,
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.1),
+                    color: Colors.black.withOpacity(0.2),
                     spreadRadius: 1,
-                    blurRadius: 1,
+                    blurRadius: 2,
                     offset: const Offset(0, 1),
                   ),
                 ],
@@ -1251,7 +1262,7 @@ class _HomePageState extends State<HomePage> {
               child: Icon(
                 favorite ? Icons.favorite : Icons.favorite_border,
                 color: favorite ? Colors.red : Colors.grey.shade400,
-                size: 14,
+                size: 16,
               ),
             ),
           ),
