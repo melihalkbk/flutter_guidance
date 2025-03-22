@@ -14,6 +14,8 @@ The app is structured to provide an intuitive learning experience, guiding users
 
 ## 🔆 Overall Look'n Feel
 
+Click image to watch the video 
+
 [![Watch the demo](https://img.youtube.com/vi/nC5Lo_rANus/0.jpg)](https://www.youtube.com/watch?v=nC5Lo_rANus)
 
 
