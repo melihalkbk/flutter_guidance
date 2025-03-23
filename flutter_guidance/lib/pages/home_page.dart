@@ -951,37 +951,27 @@ class _HomePageState extends State<HomePage> {
                                     "Searchable widget catalog for quick access",
                               ),
                               const SizedBox(height: 20),
-                              ElevatedButton(
-                                onPressed: () async {
-                                  final url = Uri.parse(
-                                    'https://flutter.dev/docs',
-                                  );
-                                  if (await canLaunchUrl(url)) {
-                                    await launchUrl(url);
-                                  }
-                                },
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.blue,
-                                  foregroundColor: Colors.white,
-                                  padding: const EdgeInsets.symmetric(
-                                    vertical: 16,
-                                    horizontal: 24,
-                                  ),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(12),
-                                  ),
-                                ),
-                                child: const Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Icon(Icons.link),
-                                    SizedBox(width: 8),
-                                    Text(
-                                      "Visit Flutter Documentation",
-                                      style: TextStyle(fontSize: 16),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: _buildActionButton(
+                                      title: "Flutter Docs",
+                                      icon: Icons.link,
+                                      color: Colors.blue,
+                                      url: 'https://flutter.dev/docs',
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                  const SizedBox(width: 10),
+                                  Expanded(
+                                    child: _buildActionButton(
+                                      title: "Source Code",
+                                      icon: Icons.code,
+                                      color: Colors.grey.shade800,
+                                      url:
+                                          'https://github.com/melihalkbk/flutter_guidance',
+                                    ),
+                                  ),
+                                ],
                               ),
                             ],
                           ),
@@ -1415,5 +1405,42 @@ class _HomePageState extends State<HomePage> {
             ? 'All Widgets'
             : '$_selectedCategory Widgets';
     }
+  }
+
+  Widget _buildActionButton({
+    required String title,
+    required IconData icon,
+    required Color color,
+    required String url,
+  }) {
+    return ElevatedButton(
+      onPressed: () async {
+        final uri = Uri.parse(url);
+        if (await canLaunchUrl(uri)) {
+          await launchUrl(uri);
+        }
+      },
+      style: ElevatedButton.styleFrom(
+        backgroundColor: color,
+        foregroundColor: Colors.white,
+        padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(icon, size: 16),
+          const SizedBox(width: 6),
+          Flexible(
+            child: Text(
+              title,
+              style: const TextStyle(fontSize: 15),
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
