@@ -1,9 +1,7 @@
 # Flutter Guidance
 
 Flutter Guidance is a comprehensive learning companion app designed to help developers master Flutter UI development through interactive examples, practical tips, and well-organized widget documentation.
-
-[![Flutter Guidance](https://github.com/your-username/flutter_guidance/blob/main/assets/flutter_guidance_banner.png?raw=true)](https://your-app-link.com)
-
+<img src=https://github.com/melihalkbk/flutter_guidance/blob/main/flutter_guidance/assets/flutter_guidance_banner.jpeg />
 <p>
 This educational project aims to make Flutter development more accessible and enjoyable for developers at all skill levels. By providing interactive examples and clear explanations, Flutter Guidance bridges the gap between documentation and practical implementation.
 </p>
@@ -153,13 +151,25 @@ Flutter Guidance organizes widgets into intuitive categories to help you find wh
 
 ## 📦 Package Dependencies
 
-| **Package**             | **Version** |
-|-------------------------|-------------|
-| firebase_core           | ^2.8.0      |
-| firebase_auth           | ^4.3.0      |
-| provider                | ^6.0.5      |
-| shared_preferences      | ^2.0.18     |
-| url_launcher            | ^6.1.10     |
+| **Package**                   | **Version** |
+|-------------------------------|-------------|
+| flutter                       | sdk         |
+| cupertino_icons               | ^1.0.8      |
+| url_launcher                  | ^6.1.14     |
+| firebase_core                 | ^3.12.1     |
+| firebase_auth                 | ^5.5.1      |
+| google_sign_in                | ^6.3.0      |
+| fluttertoast                  | ^8.2.2      |
+| dio                           | ^5.4.0      |
+| web_socket_channel            | ^2.4.0      |
+| shared_preferences            | ^2.2.2      |
+| hive                          | ^2.2.3      |
+| hive_flutter                  | ^1.1.0      |
+| video_player                  | ^2.8.2      |
+| flutter_launcher_icons        | ^0.14.3     |
+| firebase_messaging            | ^15.2.4     |
+| flutter_local_notifications   | ^16.2.0     |
+
 
 
 ## 🪽 Project Lead
