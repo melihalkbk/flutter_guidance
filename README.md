@@ -260,8 +260,6 @@ Tabii! İşte kurulum adımının devamı için önerilen markdown formatı:
    flutter run
    ```
 
-Elbette! İşte düzenlenmiş ve daha okunabilir hale getirilmiş **Contributing** bölümü:
-
 ```markdown
 ### 🤝 Contributing
 
