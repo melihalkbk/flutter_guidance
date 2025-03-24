@@ -261,28 +261,6 @@ Tabii! İşte kurulum adımının devamı için önerilen markdown formatı:
    ```
 
 ```markdown
-### 🤝 Contributing
-
-Contributions are welcome! If you'd like to contribute to **Flutter Guidance**, please follow these steps:
-
-1. **Fork** the repository.
-
-2. **Create a feature branch**:
-   ```sh
-   git checkout -b feature/amazing-feature
-   ```
-
-3. **Commit your changes**:
-   ```sh
-   git commit -m "Add some amazing feature"
-   ```
-
-4. **Push to the branch**:
-   ```sh
-   git push origin feature/amazing-feature
-   ```
-
-5. **Open a Pull Request** and briefly describe your changes.
 
 ### 📝 License
 
