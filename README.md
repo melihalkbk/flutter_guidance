@@ -210,6 +210,22 @@ Flutter Guidance organizes widgets into intuitive categories to help you find wh
 | firebase_messaging            | ^15.2.4     |
 | flutter_local_notifications   | ^16.2.0     |
 
+## 👤 First Creator
+
+---
+
+<table>
+  <tbody>
+    <tr>
+      <td align="center" valign="top" width="14.28%">
+        <a href="https://github.com/gurkanfikretgunak">
+          <img src="https://avatars.githubusercontent.com/u/52853374?v=4" width="100px;" alt="Gurkan Fikret Gunak"/>
+          <br /><sub><b>Gürkan Fikret Günak</b></sub>
+        </a>
+      </td>
+    </tr>
+  </tbody>
+</table>
 
 
 ## 🪽 Project Lead
