@@ -42,7 +42,7 @@ class ImageView extends StatelessWidget {
               const SizedBox(height: 20),
               const Center(
                 child: Image(
-                  image: AssetImage('assets/atatürk.jpg'),
+                  image: AssetImage('assets/image_component.jpg'),
                   width: 500,
                   height: 120,
                 ),

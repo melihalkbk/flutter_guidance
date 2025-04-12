@@ -497,7 +497,7 @@ class _LoginPageState extends State<LoginPage>
                                       child: ElevatedButton.icon(
                                         onPressed: _signInWithGoogle,
                                         icon: Image.asset(
-                                          'assets/googleLogo.png',
+                                          'assets/google_logo.png',
                                           height: 24,
                                         ),
                                         label: const Text(

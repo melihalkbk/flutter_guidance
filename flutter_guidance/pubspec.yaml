@@ -61,4 +61,4 @@ flutter:
 flutter_icons:
   android: true
   ios: true
-  image_path: "assets/logo.jpg"
+  image_path: "assets/app_logo.jpg"
