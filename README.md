@@ -251,7 +251,6 @@ Flutter Guidance organizes widgets into intuitive categories to help you find wh
 - Android Studio, VS Code, or another IDE with Flutter support
 - iOS simulator or Android emulator (or physical device)
 
-Tabii! İşte kurulum adımının devamı için önerilen markdown formatı:
 
 ```markdown
 ### Installation
